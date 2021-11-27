@@ -19,6 +19,8 @@ public class InputFileProvider {
         InputFile inputFile = new InputFile(directory + "input.txt");
         if (inputFile.exists()) {
             inputFiles.add(inputFile);
+        } else {
+            return inputFiles;
         }
 
         addAllExamplesForPart(directory, 1, inputFiles);

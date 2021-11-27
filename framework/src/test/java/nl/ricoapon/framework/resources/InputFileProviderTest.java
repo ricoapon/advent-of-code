@@ -31,4 +31,9 @@ class InputFileProviderTest {
     void exampleFilesForWhichThePreviousOneDoesNotExistIsIgnored() {
         assertEquals(1, InputFileProvider.getAllInputFiles(2).size());
     }
+
+    @Test
+    void returnEmptyListIfNoInputIsFound() {
+        assertEquals(0, InputFileProvider.getAllInputFiles(3).size());
+    }
 }
