@@ -10,7 +10,7 @@ public class InputFileProvider {
 
     /**
      * @param day The day of which the files should be found.
-     * @return A list of {@link InputFile} that are available as input for the solution.
+     * @return A list of {@link InputFile} that are available as input for the algorithm.
      */
     public static List<InputFile> getAllInputFiles(int day) {
         String directory = "/day" + day + "/";

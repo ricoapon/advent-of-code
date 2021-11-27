@@ -1,9 +1,10 @@
 package nl.ricoapon.framework;
 
 /**
- * Interface that should be used for classes that contain the solution algorithm to a problem of a <b>single</b> day.
+ * Interface that should be used for classes that contain the algorithm to solve both parts of the problem of a
+ * <b>single</b> day.
  */
-public interface SolutionAlgorithm {
+public interface Algorithm {
     /**
      * @param input The input of the problem.
      * @return The solution to part 1 of the problem.

@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Abstraction of a resource file that can be used as input for solution algorithms.
+ * Abstraction of a resource file that can be used as input for algorithms.
  */
 public record InputFile(String path) {
 
