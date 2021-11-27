@@ -53,8 +53,7 @@ class InputFileTest {
     void existsAndReadContentWork() {
         InputFile day1Input = new InputFile("/day1/input.txt");
         assertTrue(day1Input.exists());
-        // New lines are only a nuisance for the test. Ignoring them is the easiest way to make sure this test doesn't fail.
-        assertEquals("input", day1Input.readContent().replaceAll("[\r\n]", ""));
+        assertEquals("input", day1Input.readContent());
 
         InputFile nonExistingInput = new InputFile("/day3/input.txt");
         assertFalse(nonExistingInput.exists());
