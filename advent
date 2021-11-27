@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ $# -eq 0 ]; then
+  echo "You have to pass at least one argument. For more information see the README of the repository."
+  exit 1
+fi
+
+# For some reason, I couldn't get this to work when just executing the command. It tries to add random single quotes.
+# As a workaround I use the eval command.
+command="./gradlew :cli:run --args=\"$@\""
+eval $command
