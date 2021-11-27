@@ -36,26 +36,30 @@ public class TestDataProvider {
         if (expectedAnswers.size() == 0) {
             return testData;
         }
-        testData.add(new TestData(day, 1, inputFiles.get(0).readContent(), expectedAnswers.get(0)));
+        testData.add(new TestData(day, 1, inputFiles.get(0).readContent(), expectedAnswers.get(0), false, null));
 
         for (int i = 0; i < Math.min(nrOfExamplesInPart1, expectedAnswers.size() - 1); i++) {
             testData.add(new TestData(day,
                     1,
                     inputFiles.get(1 + i).readContent(),
-                    expectedAnswers.get(1 + i)));
+                    expectedAnswers.get(1 + i),
+                    true,
+                    i + 1));
         }
 
         if (expectedAnswers.size() == nrOfExamplesInPart1 + 1) {
             return testData;
         }
 
-        testData.add(new TestData(day, 2, inputFiles.get(0).readContent(), expectedAnswers.get(nrOfExamplesInPart1 + 1)));
+        testData.add(new TestData(day, 2, inputFiles.get(0).readContent(), expectedAnswers.get(nrOfExamplesInPart1 + 1), false, null));
 
         for (int i = 0; i < Math.min(nrOfExamplesInPart2, expectedAnswers.size() - 2 - nrOfExamplesInPart1); i++) {
             testData.add(new TestData(day,
                     2,
                     inputFiles.get(1 + nrOfExamplesInPart1 + i).readContent(),
-                    expectedAnswers.get(2 + nrOfExamplesInPart1 + i)));
+                    expectedAnswers.get(2 + nrOfExamplesInPart1 + i),
+                    true,
+                    i + 1));
         }
 
         return testData;
