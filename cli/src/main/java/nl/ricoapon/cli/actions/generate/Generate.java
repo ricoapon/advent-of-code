@@ -1,7 +1,7 @@
 package nl.ricoapon.cli.actions.generate;
 
 import nl.ricoapon.cli.FileUtil;
-import nl.ricoapon.cli.actions.session.SessionTokenProvider;
+import nl.ricoapon.cli.actions.session.AdventOfCodeSessionManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -66,7 +66,7 @@ public class Generate {
     private void step3_downloadAndFillInput() {
         HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest httpRequest = HttpRequest.newBuilder(URI.create("https://adventofcode.com/" + year + "/day/" + day + "/input"))
-                .header("Cookie", SessionTokenProvider.INSTANCE.getSessionToken())
+                .header("Cookie", AdventOfCodeSessionManager.INSTANCE.getSession())
                 .build();
         HttpResponse<String> response;
         try {
