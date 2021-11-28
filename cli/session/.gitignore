@@ -1,0 +1,2 @@
+# Make sure the session that is generated will never be committed.
+session.txt
