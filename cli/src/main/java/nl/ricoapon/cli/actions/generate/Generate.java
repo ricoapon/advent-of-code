@@ -1,6 +1,6 @@
 package nl.ricoapon.cli.actions.generate;
 
-import nl.ricoapon.cli.FileUtil;
+import nl.ricoapon.cli.MyFileUtils;
 import nl.ricoapon.cli.actions.session.AdventOfCodeSessionManager;
 
 import java.io.File;
@@ -42,12 +42,12 @@ public class Generate {
      * </ul>
      */
     private void step1_createAllFiles() {
-        FileUtil.createFile(fileInstanceCreator.algorithmDay());
-        FileUtil.createFile(fileInstanceCreator.algorithmDayTest());
-        FileUtil.createFile(fileInstanceCreator.expected());
-        FileUtil.createFile(fileInstanceCreator.input());
-        FileUtil.createFile(fileInstanceCreator.part1example1());
-        FileUtil.createFile(fileInstanceCreator.part2example1());
+        MyFileUtils.touchFile(fileInstanceCreator.algorithmDay());
+        MyFileUtils.touchFile(fileInstanceCreator.algorithmDayTest());
+        MyFileUtils.touchFile(fileInstanceCreator.expected());
+        MyFileUtils.touchFile(fileInstanceCreator.input());
+        MyFileUtils.touchFile(fileInstanceCreator.part1example1());
+        MyFileUtils.touchFile(fileInstanceCreator.part2example1());
     }
 
     /**
@@ -59,8 +59,8 @@ public class Generate {
      */
     private void step2_fillJavaClasses() {
         TemplateGenerator templateGenerator = new TemplateGenerator();
-        FileUtil.appendContentOfFile(fileInstanceCreator.algorithmDay(), templateGenerator.generateAlgorithmDay(day));
-        FileUtil.appendContentOfFile(fileInstanceCreator.algorithmDayTest(), templateGenerator.generateAlgorithmDayTest(day));
+        MyFileUtils.overwriteContentOfFile(fileInstanceCreator.algorithmDay(), templateGenerator.generateAlgorithmDay(day));
+        MyFileUtils.overwriteContentOfFile(fileInstanceCreator.algorithmDayTest(), templateGenerator.generateAlgorithmDayTest(day));
     }
 
     private void step3_downloadAndFillInput() {
@@ -79,6 +79,6 @@ public class Generate {
             throw new RuntimeException("Response was not 200");
         }
 
-        FileUtil.appendContentOfFile(fileInstanceCreator.input(), response.body());
+        MyFileUtils.overwriteContentOfFile(fileInstanceCreator.input(), response.body());
     }
 }

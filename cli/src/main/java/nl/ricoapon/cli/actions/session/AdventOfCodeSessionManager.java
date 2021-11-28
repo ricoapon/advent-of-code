@@ -1,6 +1,6 @@
 package nl.ricoapon.cli.actions.session;
 
-import nl.ricoapon.cli.FileUtil;
+import nl.ricoapon.cli.MyFileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +13,7 @@ import java.nio.file.Files;
 public enum AdventOfCodeSessionManager {
     INSTANCE;
 
-    private final static File sessionFile = new File(FileUtil.determineHomeDirectory(), "cli/session/session.txt");
+    private final static File sessionFile = new File(MyFileUtils.determineHomeDirectory(), "cli/session/session.txt");
 
     public boolean isSessionSet() {
         return sessionFile.exists();
@@ -25,7 +25,7 @@ public enum AdventOfCodeSessionManager {
             throw new RuntimeException("Could not delete the old session file. Please do so manually.");
         }
 
-        FileUtil.appendContentOfFile(sessionFile, "session=" + session);
+        MyFileUtils.overwriteContentOfFile(sessionFile, "session=" + session);
     }
 
     public String getSession() {
