@@ -1,30 +1,33 @@
 package nl.ricoapon.cli.actions.generate;
 
-import java.io.BufferedWriter;
+import nl.ricoapon.cli.FileUtil;
+import nl.ricoapon.cli.actions.session.SessionTokenProvider;
+
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.nio.charset.StandardCharsets;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 /**
  * Action to generate all the files needed for a single day.
  */
 public class Generate {
-    private final File homeDirectory;
-    private final PathCreator pathCreator;
+    private final FileInstanceCreator fileInstanceCreator;
+    private final int year;
     private final int day;
 
     public Generate(File homeDirectory, int year, int day) {
-        this.homeDirectory = homeDirectory;
+        this.fileInstanceCreator = new FileInstanceCreator(homeDirectory, year, day);
+        this.year = year;
         this.day = day;
-        this.pathCreator = new PathCreator(year, day);
     }
 
     public void generate() {
         step1_createAllFiles();
         step2_fillJavaClasses();
+        step3_downloadAndFillInput();
     }
 
     /**
@@ -39,12 +42,12 @@ public class Generate {
      * </ul>
      */
     private void step1_createAllFiles() {
-        createFile(pathCreator.algorithmDay());
-        createFile(pathCreator.algorithmDayTest());
-        createFile(pathCreator.expected());
-        createFile(pathCreator.input());
-        createFile(pathCreator.part1example1());
-        createFile(pathCreator.part2example1());
+        FileUtil.createFile(fileInstanceCreator.algorithmDay());
+        FileUtil.createFile(fileInstanceCreator.algorithmDayTest());
+        FileUtil.createFile(fileInstanceCreator.expected());
+        FileUtil.createFile(fileInstanceCreator.input());
+        FileUtil.createFile(fileInstanceCreator.part1example1());
+        FileUtil.createFile(fileInstanceCreator.part2example1());
     }
 
     /**
@@ -56,30 +59,26 @@ public class Generate {
      */
     private void step2_fillJavaClasses() {
         TemplateGenerator templateGenerator = new TemplateGenerator();
-        fillContentOfFile(pathCreator.algorithmDay(), templateGenerator.generateAlgorithmDay(day));
-        fillContentOfFile(pathCreator.algorithmDayTest(), templateGenerator.generateAlgorithmDayTest(day));
+        FileUtil.appendContentOfFile(fileInstanceCreator.algorithmDay(), templateGenerator.generateAlgorithmDay(day));
+        FileUtil.appendContentOfFile(fileInstanceCreator.algorithmDayTest(), templateGenerator.generateAlgorithmDayTest(day));
     }
 
-    private void createFile(String pathRelativeToHomeDirectory) {
-        File file = new File(homeDirectory, pathRelativeToHomeDirectory);
+    private void step3_downloadAndFillInput() {
+        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpRequest httpRequest = HttpRequest.newBuilder(URI.create("https://adventofcode.com/" + year + "/day/" + day + "/input"))
+                .header("Cookie", SessionTokenProvider.INSTANCE.getSessionToken())
+                .build();
+        HttpResponse<String> response;
         try {
-            // Make sure to only create directories of the parent file, otherwise the file itself will be created as a directory.
-            //noinspection ResultOfMethodCallIgnored
-            file.getParentFile().mkdirs();
-
-            if (!file.createNewFile())  {
-                throw new IOException("File " + file.getAbsolutePath() + " already exists");
-            }
-        } catch (IOException e) {
-            throw new RuntimeException("File creation failed", e);
+            response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException("Could not download input file", e);
         }
-    }
 
-    private void fillContentOfFile(String pathRelativeToHomeDirectory, String content) {
-        try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(homeDirectory, pathRelativeToHomeDirectory)), StandardCharsets.UTF_8))) {
-            writer.write(content);
-        } catch (IOException e) {
-            throw new RuntimeException("Could not write to file", e);
+        if (response.statusCode() != 200) {
+            throw new RuntimeException("Response was not 200");
         }
+
+        FileUtil.appendContentOfFile(fileInstanceCreator.input(), response.body());
     }
 }
