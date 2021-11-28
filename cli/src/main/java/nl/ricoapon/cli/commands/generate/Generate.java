@@ -1,7 +1,7 @@
 package nl.ricoapon.cli.commands.generate;
 
 import nl.ricoapon.cli.MyFileUtils;
-import nl.ricoapon.cli.commands.session.AdventOfCodeSessionManager;
+import nl.ricoapon.cli.commands.setsession.AdventOfCodeSessionManager;
 import picocli.CommandLine;
 
 import java.io.IOException;

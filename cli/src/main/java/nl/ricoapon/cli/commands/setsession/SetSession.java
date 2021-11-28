@@ -1,10 +1,10 @@
-package nl.ricoapon.cli.commands.session;
+package nl.ricoapon.cli.commands.setsession;
 
 import picocli.CommandLine;
 
 @CommandLine.Command(name = "set-session", mixinStandardHelpOptions = true,
         description = "Stores the session into a file on disk so it can be used to download files from http://adventofcode.com.")
-public class SetSessionCommand implements Runnable {
+public class SetSession implements Runnable {
 
     @CommandLine.Parameters(index = "0", description = "The session that is stored in the cookie")
     private String session;

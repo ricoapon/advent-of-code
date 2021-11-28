@@ -1,4 +1,4 @@
-package nl.ricoapon.cli.commands.session;
+package nl.ricoapon.cli.commands.setsession;
 
 import nl.ricoapon.cli.MyFileUtils;
 
