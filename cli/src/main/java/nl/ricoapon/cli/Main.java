@@ -1,7 +1,7 @@
 package nl.ricoapon.cli;
 
-import nl.ricoapon.cli.actions.generate.Generate;
-import nl.ricoapon.cli.actions.session.SetSessionCommand;
+import nl.ricoapon.cli.commands.generate.Generate;
+import nl.ricoapon.cli.commands.session.SetSessionCommand;
 import picocli.CommandLine;
 
 @CommandLine.Command(name = "advent", mixinStandardHelpOptions = true,
