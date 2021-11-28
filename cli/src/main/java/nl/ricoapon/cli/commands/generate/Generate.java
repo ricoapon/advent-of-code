@@ -1,30 +1,29 @@
-package nl.ricoapon.cli.actions.generate;
+package nl.ricoapon.cli.commands.generate;
 
 import nl.ricoapon.cli.MyFileUtils;
-import nl.ricoapon.cli.actions.session.AdventOfCodeSessionManager;
+import nl.ricoapon.cli.commands.setsession.AdventOfCodeSessionManager;
+import picocli.CommandLine;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-/**
- * Action to generate all the files needed for a single day.
- */
-public class Generate {
-    private final FileInstanceCreator fileInstanceCreator;
-    private final int year;
-    private final int day;
+@CommandLine.Command(name = "generate", mixinStandardHelpOptions = true,
+        description = "Generates all the needed files needed to solve a problem.")
+public class Generate implements Runnable {
+    private FileInstanceCreator fileInstanceCreator;
 
-    public Generate(File homeDirectory, int year, int day) {
-        this.fileInstanceCreator = new FileInstanceCreator(homeDirectory, year, day);
-        this.year = year;
-        this.day = day;
-    }
+    @CommandLine.Parameters(index = "0", description = "The year of the problem to solve")
+    private int year;
 
-    public void generate() {
+    @CommandLine.Parameters(index = "1", description = "The day of the problem to solve")
+    private int day;
+
+    @Override
+    public void run() {
+        this.fileInstanceCreator = new FileInstanceCreator(MyFileUtils.determineHomeDirectory(), year, day);
         step1_createAllFiles();
         step2_fillJavaClasses();
         step3_downloadAndFillInput();

@@ -1,4 +1,4 @@
-package nl.ricoapon.cli.actions.generate;
+package nl.ricoapon.cli.commands.generate;
 
 import java.io.File;
 
