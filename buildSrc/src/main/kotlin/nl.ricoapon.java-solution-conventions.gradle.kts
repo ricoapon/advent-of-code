@@ -6,4 +6,5 @@ plugins {
 
 dependencies {
     implementation(project(":framework"))
+    implementation(project(":utilities"))
 }
