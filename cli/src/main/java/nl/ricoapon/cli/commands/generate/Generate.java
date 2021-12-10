@@ -27,6 +27,7 @@ public class Generate implements Runnable {
         step1_createAllFiles();
         step2_fillJavaClasses();
         step3_downloadAndFillInput();
+        step4_fillExpected();
     }
 
     /**
@@ -36,8 +37,7 @@ public class Generate implements Runnable {
      *     <li>{@code AlgorithmDayXTest.java}</li>
      *     <li>{@code expected.txt}</li>
      *     <li>{@code input.txt}</li>
-     *     <li>{@code part1_example1.txt}</li>
-     *     <li>{@code part2_example1.txt}</li>
+     *     <li>{@code example.txt}</li>
      * </ul>
      */
     private void step1_createAllFiles() {
@@ -45,8 +45,7 @@ public class Generate implements Runnable {
         MyFileUtils.touchFile(fileInstanceCreator.algorithmDayTest());
         MyFileUtils.touchFile(fileInstanceCreator.expected());
         MyFileUtils.touchFile(fileInstanceCreator.input());
-        MyFileUtils.touchFile(fileInstanceCreator.part1example1());
-        MyFileUtils.touchFile(fileInstanceCreator.part2example1());
+        MyFileUtils.touchFile(fileInstanceCreator.example());
     }
 
     /**
@@ -79,5 +78,9 @@ public class Generate implements Runnable {
         }
 
         MyFileUtils.overwriteContentOfFile(fileInstanceCreator.input(), response.body());
+    }
+
+    private void step4_fillExpected() {
+        MyFileUtils.overwriteContentOfFile(fileInstanceCreator.expected(), "?\n?\n?\n?\n");
     }
 }

@@ -34,12 +34,8 @@ public class FileInstanceCreator {
         return fileOf(resourceStartingPath + "input.txt");
     }
 
-    public File part1example1() {
-        return fileOf(resourceStartingPath + "part1_example1.txt");
-    }
-
-    public File part2example1() {
-        return fileOf(resourceStartingPath + "part2_example1.txt");
+    public File example() {
+        return fileOf(resourceStartingPath + "example.txt");
     }
 
     private File fileOf(String path) {
