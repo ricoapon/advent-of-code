@@ -6,34 +6,23 @@ import java.util.regex.Pattern;
 /**
  * Abstraction of a resource file that can be used as input for algorithms.
  */
-public record InputFile(String path) {
+public record InputFile(String path, boolean canBeUsedForPart1, boolean canBeUsedForPart2, boolean isExample) {
     private final static String INPUT_FILENAME_REGEX_PATTERN = "/day([1-9]|1[0-9]|2[0-5])/input\\.txt";
     private final static String EXAMPLE_FILENAME_REGEX_PATTERN = "/day([1-9]|1[0-9]|2[0-5])/part([12])_example(\\d+)\\.txt";
 
-    public InputFile(String path) {
-        this.path = path;
-
-        if (!path.matches(INPUT_FILENAME_REGEX_PATTERN) && !isExample()) {
-            throw new IllegalArgumentException("Cannot create an InputFile that doesn't satisfy input or example filename patterns. Path argument was: '" + path + "'");
+    public static InputFile of(String path) {
+        Matcher matcher = Pattern.compile(INPUT_FILENAME_REGEX_PATTERN).matcher(path);
+        if (matcher.matches()) {
+            return new InputFile(path, true, true, false);
         }
-    }
 
-    /**
-     * @return Whether this file refers to an example ({@code true}) or the actual input file ({@code false}).
-     */
-    public boolean isExample() {
-        return path.matches(EXAMPLE_FILENAME_REGEX_PATTERN);
-    }
-
-    /**
-     * @return Which part this file is an input for. Only relevant when {@link #isExample()} is {@code true}.
-     */
-    public int part() {
-        Matcher matcher = Pattern.compile(EXAMPLE_FILENAME_REGEX_PATTERN).matcher(path);
-        if (!matcher.matches()) {
-            throw new RuntimeException("part() was called for a non-example InputFile");
+        matcher = Pattern.compile(EXAMPLE_FILENAME_REGEX_PATTERN).matcher(path);
+        if (matcher.matches()) {
+            int part = Integer.parseInt(matcher.group(2));
+            return new InputFile(path, (part == 1), (part == 2), true);
         }
-        return Integer.parseInt(matcher.group(2));
+
+        throw new IllegalArgumentException("Cannot create an InputFile that doesn't satisfy input or example filename patterns. Path argument was: '" + path + "'");
     }
 
     /**

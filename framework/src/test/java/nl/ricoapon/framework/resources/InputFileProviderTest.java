@@ -10,16 +10,23 @@ class InputFileProviderTest {
 
     @Test
     void filesFromResourcesAreFoundAndOrderedCorrectly() {
-        // This test basically covers everything. It is hard to
+        // This test basically covers everything.
         List<InputFile> inputFiles = InputFileProvider.getAllInputFiles(1);
 
         assertEquals(4, inputFiles.size());
 
         assertFalse(inputFiles.get(0).isExample());
+        assertTrue(inputFiles.get(1).isExample());
+        assertTrue(inputFiles.get(2).isExample());
+        assertTrue(inputFiles.get(3).isExample());
 
-        assertEquals(1, inputFiles.get(1).part());
-        assertEquals(1, inputFiles.get(2).part());
-        assertEquals(2, inputFiles.get(3).part());
+        assertTrue(inputFiles.get(1).canBeUsedForPart1());
+        assertTrue(inputFiles.get(2).canBeUsedForPart1());
+        assertFalse(inputFiles.get(3).canBeUsedForPart1());
+
+        assertFalse(inputFiles.get(1).canBeUsedForPart2());
+        assertFalse(inputFiles.get(2).canBeUsedForPart2());
+        assertTrue(inputFiles.get(3).canBeUsedForPart2());
     }
 
     @Test

@@ -26,11 +26,11 @@ public class TestDataProvider {
 
         int nrOfExamplesInPart1 = (int) inputFiles.stream()
                 .filter(InputFile::isExample)
-                .filter(f -> f.part() == 1)
+                .filter(InputFile::canBeUsedForPart1)
                 .count();
         int nrOfExamplesInPart2 = (int) inputFiles.stream()
                 .filter(InputFile::isExample)
-                .filter(f -> f.part() == 2)
+                .filter(InputFile::canBeUsedForPart2)
                 .count();
 
         if (expectedAnswers.size() == 0) {
