@@ -23,6 +23,11 @@ public class InputFileProvider {
             return inputFiles;
         }
 
+        InputFile exampleFile = InputFile.of(directory + "example.txt");
+        if (exampleFile.exists()) {
+            inputFiles.add(exampleFile);
+        }
+
         addAllExamplesForPart(directory, 1, inputFiles);
         addAllExamplesForPart(directory, 2, inputFiles);
 
