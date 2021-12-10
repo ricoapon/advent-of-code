@@ -8,7 +8,8 @@ import java.util.regex.Pattern;
  */
 public record InputFile(String path, boolean canBeUsedForPart1, boolean canBeUsedForPart2, boolean isExample) {
     private final static String INPUT_FILENAME_REGEX_PATTERN = "/day([1-9]|1[0-9]|2[0-5])/input\\.txt";
-    private final static String EXAMPLE_FILENAME_REGEX_PATTERN = "/day([1-9]|1[0-9]|2[0-5])/part([12])_example(\\d+)\\.txt";
+    private final static String EXAMPLE_FILENAME_REGEX_PATTERN = "/day([1-9]|1[0-9]|2[0-5])/example\\.txt";
+    private final static String ADDITIONAL_EXAMPLE_FILENAME_REGEX_PATTERN = "/day([1-9]|1[0-9]|2[0-5])/part([12])_example(\\d+)\\.txt";
 
     public static InputFile of(String path) {
         Matcher matcher = Pattern.compile(INPUT_FILENAME_REGEX_PATTERN).matcher(path);
@@ -17,6 +18,12 @@ public record InputFile(String path, boolean canBeUsedForPart1, boolean canBeUse
         }
 
         matcher = Pattern.compile(EXAMPLE_FILENAME_REGEX_PATTERN).matcher(path);
+        if (matcher.matches()) {
+            return new InputFile(path, true, true, true);
+        }
+
+
+        matcher = Pattern.compile(ADDITIONAL_EXAMPLE_FILENAME_REGEX_PATTERN).matcher(path);
         if (matcher.matches()) {
             int part = Integer.parseInt(matcher.group(2));
             return new InputFile(path, (part == 1), (part == 2), true);

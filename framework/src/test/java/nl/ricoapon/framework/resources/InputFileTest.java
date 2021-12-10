@@ -12,13 +12,15 @@ class InputFileTest {
     @Nested
     class ConstructorValidation {
         @ParameterizedTest
-        @ValueSource(strings = {"/day25/input.txt", "/day5/part1_example1.txt", "/day17/part2_example5.txt", "/day1/part2_example0.txt"})
+        @ValueSource(strings = {"/day25/input.txt", "/day5/part1_example1.txt", "/day17/part2_example5.txt", "/day1/part2_example0.txt",
+                "/day2/example.txt"})
         void validPathsDoNotThrowAnException(String path) {
             InputFile.of(path);
         }
 
         @ParameterizedTest
-        @ValueSource(strings = {"/day26/input.txt", "/day5/part1_example1", "day17/part2_example5.txt", "/day1/part2_example.txt"})
+        @ValueSource(strings = {"/day26/input.txt", "/day5/part1_example1", "day17/part2_example5.txt", "/day1/part2_example.txt",
+                "/day1/example", "/day4/example1.txt"})
         void invalidPathsThrowAnException(String path) {
             assertThrows(IllegalArgumentException.class, () -> InputFile.of(path));
         }
