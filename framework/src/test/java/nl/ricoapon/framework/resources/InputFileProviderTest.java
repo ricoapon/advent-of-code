@@ -18,13 +18,8 @@ class InputFileProviderTest {
         assertFalse(inputFiles.get(0).isExample());
 
         assertEquals(1, inputFiles.get(1).part());
-        assertEquals(1, inputFiles.get(1).exampleNumber());
-
         assertEquals(1, inputFiles.get(2).part());
-        assertEquals(2, inputFiles.get(2).exampleNumber());
-
         assertEquals(2, inputFiles.get(3).part());
-        assertEquals(1, inputFiles.get(3).exampleNumber());
     }
 
     @Test

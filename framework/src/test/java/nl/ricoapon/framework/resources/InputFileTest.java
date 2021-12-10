@@ -31,22 +31,9 @@ class InputFileTest {
     }
 
     @Test
-    void dayWorks() {
-        assertEquals(1, new InputFile("/day1/part1_example2.txt").day());
-        assertEquals(17, new InputFile("/day17/part2_example1.txt").day());
-        assertEquals(25, new InputFile("/day25/input.txt").day());
-    }
-
-    @Test
     void partWorks() {
         assertEquals(1, new InputFile("/day1/part1_example2.txt").part());
         assertEquals(2, new InputFile("/day17/part2_example1.txt").part());
-    }
-
-    @Test
-    void exampleNumberWorks() {
-        assertEquals(3, new InputFile("/day1/part1_example3.txt").exampleNumber());
-        assertEquals(1, new InputFile("/day17/part2_example1.txt").exampleNumber());
     }
 
     @Test
