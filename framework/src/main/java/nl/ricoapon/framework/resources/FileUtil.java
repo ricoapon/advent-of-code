@@ -9,7 +9,7 @@ import java.util.Objects;
 public class FileUtil {
     /**
      * @param path The path to the resource.
-     * @return The content of the resource. All occurences of '\r' are removed and new lines at the end as well.
+     * @return The content of the resource. All occurrences of '\r' are removed and new lines at the end as well.
      */
     public static String readContentFromResource(String path) {
         try {

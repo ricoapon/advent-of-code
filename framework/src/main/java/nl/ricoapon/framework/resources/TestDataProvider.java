@@ -16,50 +16,37 @@ public class TestDataProvider {
             return testData;
         }
 
-        List<String> expectedAnswers;
+        List<String> allExpectedAnswers;
         try {
-            expectedAnswers = Arrays.stream(FileUtil.readContentFromResource("/day" + day + "/expected.txt").split("\n")).toList();
+            allExpectedAnswers = Arrays.stream(FileUtil.readContentFromResource("/day" + day + "/expected.txt").split("\n")).toList();
         } catch (RuntimeException e) {
             // No expected list could be found. So we just continue with the next day.
             return testData;
         }
 
-        int nrOfExamplesInPart1 = (int) inputFiles.stream()
-                .filter(InputFile::isExample)
-                .filter(f -> f.part() == 1)
-                .count();
-        int nrOfExamplesInPart2 = (int) inputFiles.stream()
-                .filter(InputFile::isExample)
-                .filter(f -> f.part() == 2)
-                .count();
+        List<InputFile> inputFilesForPart1 = inputFiles.stream()
+                .filter(InputFile::canBeUsedForPart1)
+                .toList();
+        List<String> expectedAnswersPart1 = allExpectedAnswers.subList(0, Math.min(inputFilesForPart1.size(), allExpectedAnswers.size()));
+        testData.addAll(createTestDataForSinglePart(day, 1, inputFilesForPart1, expectedAnswersPart1));
 
-        if (expectedAnswers.size() == 0) {
-            return testData;
-        }
-        testData.add(new TestData(day, 1, inputFiles.get(0).readContent(), expectedAnswers.get(0), false, null));
+        List<InputFile> inputFilesForPart2 = inputFiles.stream()
+                .filter(InputFile::canBeUsedForPart2)
+                .toList();
+        List<String> expectedAnswersPart2 = allExpectedAnswers.subList(expectedAnswersPart1.size(),
+                expectedAnswersPart1.size() + Math.min(inputFilesForPart2.size(), allExpectedAnswers.size() - expectedAnswersPart1.size()));
+        testData.addAll(createTestDataForSinglePart(day, 2, inputFilesForPart2, expectedAnswersPart2));
 
-        for (int i = 0; i < Math.min(nrOfExamplesInPart1, expectedAnswers.size() - 1); i++) {
-            testData.add(new TestData(day,
-                    1,
-                    inputFiles.get(1 + i).readContent(),
-                    expectedAnswers.get(1 + i),
-                    true,
-                    i + 1));
-        }
+        return testData;
+    }
 
-        if (expectedAnswers.size() == nrOfExamplesInPart1 + 1) {
-            return testData;
-        }
+    private static List<TestData> createTestDataForSinglePart(int day, int part, List<InputFile> inputFiles, List<String> expectedAnswers) {
+        List<TestData> testData = new ArrayList<>();
 
-        testData.add(new TestData(day, 2, inputFiles.get(0).readContent(), expectedAnswers.get(nrOfExamplesInPart1 + 1), false, null));
-
-        for (int i = 0; i < Math.min(nrOfExamplesInPart2, expectedAnswers.size() - 2 - nrOfExamplesInPart1); i++) {
-            testData.add(new TestData(day,
-                    2,
-                    inputFiles.get(1 + nrOfExamplesInPart1 + i).readContent(),
-                    expectedAnswers.get(2 + nrOfExamplesInPart1 + i),
-                    true,
-                    i + 1));
+        for (int i = 0; i < Math.min(inputFiles.size(), expectedAnswers.size()); i++) {
+            InputFile inputFile = inputFiles.get(i);
+            String expected = expectedAnswers.get(i);
+            testData.add(new TestData(day, part, inputFile.readContent(), expected, inputFile.isExample()));
         }
 
         return testData;
