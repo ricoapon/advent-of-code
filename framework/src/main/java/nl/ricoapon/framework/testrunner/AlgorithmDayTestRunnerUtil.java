@@ -29,14 +29,6 @@ public class AlgorithmDayTestRunnerUtil {
                 .forEach(this::runTestUsingTestData);
     }
 
-    public void testSingleExample(int part, int exampleNumber) {
-        TestDataProvider.determineTestDataForDay(day).stream()
-                .filter(TestData::isExample)
-                .filter(t -> t.part() == part)
-                .filter(t -> t.exampleNumber() == exampleNumber)
-                .forEach(this::runTestUsingTestData);
-    }
-
     public void testInput(int part) {
         TestDataProvider.determineTestDataForDay(day).stream()
                 .filter(t -> !t.isExample())
