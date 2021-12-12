@@ -1,13 +1,6 @@
 package nl.ricoapon;
 
-public class Pair<L, R> {
-    private final L l;
-    private final R r;
-
-    public Pair(L l, R r) {
-        this.l = l;
-        this.r = r;
-    }
+public record Pair<L, R>(L l, R r) {
 
     public L getL() {
         return l;
