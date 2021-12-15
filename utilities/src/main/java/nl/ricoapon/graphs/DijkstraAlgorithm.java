@@ -1,6 +1,4 @@
-package nl.ricoapon.day15;
-
-import nl.ricoapon.graphs.WeightedDirectedGraph;
+package nl.ricoapon.graphs;
 
 import java.util.Comparator;
 import java.util.HashMap;

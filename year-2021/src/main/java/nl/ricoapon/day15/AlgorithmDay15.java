@@ -3,6 +3,7 @@ package nl.ricoapon.day15;
 import nl.ricoapon.Coordinate2D;
 import nl.ricoapon.GridWithCoordinates;
 import nl.ricoapon.framework.Algorithm;
+import nl.ricoapon.graphs.DijkstraAlgorithm;
 import nl.ricoapon.graphs.WeightedDirectedGraph;
 
 import java.util.ArrayList;
