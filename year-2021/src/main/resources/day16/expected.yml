@@ -1,0 +1,17 @@
+part1:
+  input: 920
+  part1_example1: 16
+  part1_example2: 12
+  part1_example3: 23
+  part1_example4: 31
+  part1_example5: 6
+part2:
+  input: 10185143721112
+  part2_example1: 3
+  part2_example2: 54
+  part2_example3: 7
+  part2_example4: 9
+  part2_example5: 1
+  part2_example6: 0
+  part2_example7: 0
+  part2_example8: 1

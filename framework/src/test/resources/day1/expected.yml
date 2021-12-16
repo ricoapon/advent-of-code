@@ -1,0 +1,9 @@
+part1:
+  input: x1
+  example: 1
+  part1_example1: 2
+  part1_example2: 3
+part2:
+  input: x2
+  example: 4
+  part2_example1: 5

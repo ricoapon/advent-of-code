@@ -10,12 +10,12 @@ public class TemplateGenerator {
                 public class AlgorithmDay%s implements Algorithm {
                     @Override
                     public String part1(String input) {
-                        return null;
+                        return "x";
                     }
                     
                     @Override
                     public String part2(String input) {
-                        return null;
+                        return "x";
                     }
                 }
                 """.formatted(day, day);
@@ -52,5 +52,16 @@ public class TemplateGenerator {
                     }
                 }
                 """.formatted(day, day, day);
+    }
+
+    public String generateExpectedYaml() {
+        return """
+                part1:
+                  input: x
+                  example: x
+                part2:
+                  input: x
+                  example: x
+                """;
     }
 }

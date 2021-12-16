@@ -25,9 +25,8 @@ public class Generate implements Runnable {
     public void run() {
         this.fileInstanceCreator = new FileInstanceCreator(MyFileUtils.determineHomeDirectory(), year, day);
         step1_createAllFiles();
-        step2_fillJavaClasses();
+        step2_fillJavaClassesAndExpected();
         step3_downloadAndFillInput();
-        step4_fillExpected();
     }
 
     /**
@@ -55,10 +54,11 @@ public class Generate implements Runnable {
      *     <li>{@code AlgorithmDayXTest}</li>
      * </ul>
      */
-    private void step2_fillJavaClasses() {
+    private void step2_fillJavaClassesAndExpected() {
         TemplateGenerator templateGenerator = new TemplateGenerator();
         MyFileUtils.overwriteContentOfFile(fileInstanceCreator.algorithmDay(), templateGenerator.generateAlgorithmDay(day));
         MyFileUtils.overwriteContentOfFile(fileInstanceCreator.algorithmDayTest(), templateGenerator.generateAlgorithmDayTest(day));
+        MyFileUtils.overwriteContentOfFile(fileInstanceCreator.expected(), templateGenerator.generateExpectedYaml());
     }
 
     private void step3_downloadAndFillInput() {
@@ -78,9 +78,5 @@ public class Generate implements Runnable {
         }
 
         MyFileUtils.overwriteContentOfFile(fileInstanceCreator.input(), response.body());
-    }
-
-    private void step4_fillExpected() {
-        MyFileUtils.overwriteContentOfFile(fileInstanceCreator.expected(), "?\n?\n?\n?\n");
     }
 }

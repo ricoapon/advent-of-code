@@ -27,7 +27,7 @@ public class FileInstanceCreator {
     }
 
     public File expected() {
-        return fileOf(resourceStartingPath + "expected.txt");
+        return fileOf(resourceStartingPath + "expected.yml");
     }
 
     public File input() {
