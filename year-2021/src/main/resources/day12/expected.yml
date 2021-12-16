@@ -1,0 +1,10 @@
+part1:
+  input: 5212
+  example: 10
+  part1_example1: 19
+  part1_example2: 226
+part2:
+  input: 134862
+  example: 36
+  part2_example1: 103
+  part2_example2: 3509

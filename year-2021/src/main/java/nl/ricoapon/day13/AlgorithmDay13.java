@@ -44,6 +44,6 @@ public class AlgorithmDay13 implements Algorithm {
         // You have to read the output! I am not going to program this obviously :).
         transparentPaper.print();
 
-        return "?";
+        return "x";
     }
 }

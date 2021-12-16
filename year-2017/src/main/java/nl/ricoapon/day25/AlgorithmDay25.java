@@ -41,6 +41,6 @@ public class AlgorithmDay25 implements Algorithm {
 
     @Override
     public String part2(String input) {
-        return null;
+        return "x";
     }
 }
