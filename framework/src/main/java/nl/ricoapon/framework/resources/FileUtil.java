@@ -2,6 +2,7 @@ package nl.ricoapon.framework.resources;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Objects;
@@ -13,7 +14,11 @@ public class FileUtil {
      */
     public static String readContentFromResource(String path) {
         try {
-            String content = new String(Files.readAllBytes(Paths.get(Objects.requireNonNull(FileUtil.class.getResource(path)).toURI())));
+            URL resource = FileUtil.class.getResource(path);
+            if (resource == null) {
+                throw new RuntimeException("The file with given path does not exist: '" + path + "'");
+            }
+            String content = new String(Files.readAllBytes(Paths.get(resource.toURI())));
             content = content.replaceAll("\r", "");
             while (content.endsWith("\n")) {
                 content = content.substring(0, content.length() - 1);
