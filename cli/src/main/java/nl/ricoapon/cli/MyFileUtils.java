@@ -15,7 +15,7 @@ public class MyFileUtils {
      * @return The home directory of the entire repository.
      */
     public static File determineHomeDirectory() {
-        return new File("../");
+        return new File("./");
     }
 
     /**
