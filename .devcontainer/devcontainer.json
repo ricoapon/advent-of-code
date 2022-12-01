@@ -15,14 +15,5 @@
 				"eamodio.gitlens"
 			]
 		}
-	},
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"vscjava.vscode-java-pack",
-				"vscjava.vscode-gradle",
-				"mathiasfrohlich.Kotlin"
-			]
-		}
 	}
 }
