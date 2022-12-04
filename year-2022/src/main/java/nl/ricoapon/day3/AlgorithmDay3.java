@@ -1,8 +1,6 @@
 package nl.ricoapon.day3;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -38,6 +36,18 @@ public class AlgorithmDay3 implements Algorithm {
 
     @Override
     public String part2(String input) {
-        return "x";
+        int i = 0;
+        String[] inputArray = input.split("\r?\n");
+        int sum = 0;
+        while (i < inputArray.length - 1) {
+            Set<Character> firstBag = createSetOfChars(inputArray[i++]);
+            firstBag.retainAll(createSetOfChars(inputArray[i++]));
+            firstBag.retainAll(createSetOfChars(inputArray[i++]));
+            if (firstBag.size() != 1) {
+                throw new RuntimeException("This should not happen");
+            }
+            sum += determineScore(firstBag.iterator().next());
+        }
+        return String.valueOf(sum);
     }
 }
