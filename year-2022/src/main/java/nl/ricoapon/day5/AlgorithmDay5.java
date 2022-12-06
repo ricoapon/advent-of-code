@@ -16,7 +16,7 @@ public class AlgorithmDay5 implements Algorithm {
         
         public static CrateStacks of(List<String> lines) {
             int nrOfStacks = (lines.get(0).length() + 1) / 4;
-            List<Stack<String>> stacks = new ArrayList();
+            List<Stack<String>> stacks = new ArrayList<>();
             for (int i = 0; i < nrOfStacks; i++) {
                 stacks.add(new Stack<>());
             }

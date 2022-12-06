@@ -2,8 +2,6 @@ package nl.ricoapon.day5;
 
 import nl.ricoapon.framework.testrunner.AlgorithmDayTestRunnerUtil;
 
-import java.util.*;
-
 import org.junit.jupiter.api.Test;
 
 class AlgorithmDay5Test {
