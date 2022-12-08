@@ -119,4 +119,12 @@ public class Grid<C> {
         adjacentCells.addAll(determineDiagonallyAdjacentCells(c));
         return adjacentCells;
     }
+
+    public int getSizeX() {
+        return sizeX;
+    }
+
+    public int getSizeY() {
+        return sizeY;
+    }
 }
