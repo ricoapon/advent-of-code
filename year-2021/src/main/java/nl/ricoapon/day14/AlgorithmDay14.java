@@ -1,15 +1,14 @@
 package nl.ricoapon.day14;
 
-import nl.ricoapon.framework.Algorithm;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import nl.ricoapon.framework.Algorithm;
 
 public class AlgorithmDay14 implements Algorithm {
     private List<PolymerTemplate.Pair> createPairsFromInitialTemplate(String input) {

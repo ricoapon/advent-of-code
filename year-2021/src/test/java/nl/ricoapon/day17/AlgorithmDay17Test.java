@@ -1,14 +1,8 @@
 package nl.ricoapon.day17;
 
-import nl.ricoapon.framework.testrunner.AlgorithmDayTestRunnerUtil;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import nl.ricoapon.framework.testrunner.AlgorithmDayTestRunnerUtil;
 
 class AlgorithmDay17Test {
     private final AlgorithmDayTestRunnerUtil algorithmDayTestRunnerUtil = new AlgorithmDayTestRunnerUtil(17);

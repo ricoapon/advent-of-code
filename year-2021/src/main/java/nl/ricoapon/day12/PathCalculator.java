@@ -47,8 +47,4 @@ public class PathCalculator {
             currentPath.remove(lastIndex);
         }
     }
-
-    private boolean isSmallCave(String node) {
-        return node.toLowerCase().equals(node);
-    }
 }
