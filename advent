@@ -7,5 +7,5 @@ fi
 
 # For some reason, I couldn't get this to work when just executing the command. It tries to add random single quotes.
 # As a workaround I use the eval command.
-command="./mvnw exec:java -pl cli -Dexec.args=\"$@\""
+command="./mvnw compile exec:java -pl cli -Dexec.args=\"$@\""
 eval $command
