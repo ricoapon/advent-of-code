@@ -41,9 +41,7 @@ public class AlgorithmDay13 implements Algorithm {
         TransparentPaper transparentPaper = new TransparentPaper(readDots(twoPartInput[0]));
         readFoldInstructions(twoPartInput[1]).forEach(transparentPaper::fold);
 
-        // You have to read the output! I am not going to program this obviously :).
-        transparentPaper.print();
-
-        return "x";
+        // The YAML reader trims the expected output as well, so this is needed here.
+        return transparentPaper.print().trim();
     }
 }

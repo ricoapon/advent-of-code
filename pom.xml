@@ -15,6 +15,7 @@
         <module>framework</module>
         <module>utilities</module>
         <module>year-2017</module>
+        <module>year-2021</module>
         <module>year-2022</module>
     </modules>
 

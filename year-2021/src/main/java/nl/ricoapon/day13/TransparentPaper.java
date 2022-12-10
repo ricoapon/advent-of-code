@@ -48,19 +48,21 @@ public class TransparentPaper {
         return dots.values().size();
     }
 
-    public void print() {
+    public String print() {
+        StringBuilder stringBuilder = new StringBuilder();
         int maxX = dots.keySet().stream().max(Comparator.comparingInt(Coordinate2D::x)).orElseThrow().x();
         int maxY = dots.keySet().stream().max(Comparator.comparingInt(Coordinate2D::y)).orElseThrow().y();
 
         for (int y = 0; y <= maxY; y++) {
             for (int x = 0; x <= maxX; x++) {
                 if (dots.containsKey(new Coordinate2D(x, y))) {
-                    System.out.print("#");
+                    stringBuilder.append("#");
                 } else {
-                    System.out.print(" ");
+                    stringBuilder.append(" ");
                 }
             }
-            System.out.println();
+            stringBuilder.append("\n");
         }
+        return stringBuilder.toString();
     }
 }
