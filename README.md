@@ -5,13 +5,17 @@ contains additional tools to make creating solutions easier.
 
 ## CLI
 
+To automatically download input, you need to set your session:
+
+```
+./advent set-session <session-from-cookie>
+```
+
 To make it easy to create files that adhere to the standard a tool has been added. You can now use the command:
 
 ```
 ./advent g <year> <day>
 ```
-
-This can be done with either Bash or Powershell.
 
 ## Module details
 

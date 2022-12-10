@@ -15,17 +15,17 @@ public enum AdventOfCodeSessionManager {
 
     private final static File sessionFile = new File(MyFileUtils.determineHomeDirectory(), "cli/session/session.txt");
 
-    public boolean isSessionSet() {
-        return sessionFile.exists();
-    }
-
     public void setSession(String session) {
         // Make sure to clean the file before creating a new one.
         if (sessionFile.exists() && !sessionFile.delete()) {
             throw new RuntimeException("Could not delete the old session file. Please do so manually.");
         }
 
-        MyFileUtils.overwriteContentOfFile(sessionFile, "session=" + session);
+        if (!session.startsWith("session=")) {
+            session = "session=" + session;
+        }
+
+        MyFileUtils.overwriteContentOfFile(sessionFile, session);
     }
 
     public String getSession() {
