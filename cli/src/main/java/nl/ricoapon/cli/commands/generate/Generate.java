@@ -10,7 +10,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-@CommandLine.Command(name = "generate", mixinStandardHelpOptions = true,
+@CommandLine.Command(name = "generate", aliases = "g", mixinStandardHelpOptions = true,
         description = "Generates all the needed files needed to solve a problem.")
 public class Generate implements Runnable {
     private FileInstanceCreator fileInstanceCreator;
