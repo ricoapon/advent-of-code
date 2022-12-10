@@ -1,5 +1,5 @@
 # Ignore Maven build output directory
-build
+target
 
 # IntelliJ files
 .idea
