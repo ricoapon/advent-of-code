@@ -1,67 +1,61 @@
 package nl.ricoapon.cli.commands.generate;
 
-import nl.ricoapon.cli.MyFileUtils;
 import nl.ricoapon.cli.commands.setsession.AdventOfCodeSessionManager;
 import picocli.CommandLine;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+import static nl.ricoapon.cli.MyFileUtils.determineHomeDirectory;
+import static nl.ricoapon.cli.MyFileUtils.overwriteContentOfFile;
+import static nl.ricoapon.cli.MyFileUtils.readFile;
+import static nl.ricoapon.cli.MyFileUtils.touchFile;
+
 @CommandLine.Command(name = "generate", aliases = "g", mixinStandardHelpOptions = true,
         description = "Generates all the needed files needed to solve a problem.")
 public class Generate implements Runnable {
-    private FileInstanceCreator fileInstanceCreator;
 
+    @SuppressWarnings("unused")
     @CommandLine.Parameters(index = "0", description = "The year of the problem to solve")
     private int year;
 
+    @SuppressWarnings("unused")
     @CommandLine.Parameters(index = "1", description = "The day of the problem to solve")
     private int day;
 
     @Override
     public void run() {
-        this.fileInstanceCreator = new FileInstanceCreator(MyFileUtils.determineHomeDirectory(), year, day);
-        step1_createAllFiles();
-        step2_fillJavaClassesAndExpected();
-        step3_downloadAndFillInput();
-    }
-
-    /**
-     * Creates the following files in the right locations:
-     * <ul>
-     *     <li>{@code AlgorithmDayX.java}</li>
-     *     <li>{@code AlgorithmDayXTest.java}</li>
-     *     <li>{@code expected.txt}</li>
-     *     <li>{@code input.txt}</li>
-     *     <li>{@code example.txt}</li>
-     * </ul>
-     */
-    private void step1_createAllFiles() {
-        MyFileUtils.touchFile(fileInstanceCreator.algorithmDay());
-        MyFileUtils.touchFile(fileInstanceCreator.algorithmDayTest());
-        MyFileUtils.touchFile(fileInstanceCreator.expected());
-        MyFileUtils.touchFile(fileInstanceCreator.input());
-        MyFileUtils.touchFile(fileInstanceCreator.example());
-    }
-
-    /**
-     * Fill the following files with the relevant Java code:
-     * <ul>
-     *     <li>{@code AlgorithmDayX}</li>
-     *     <li>{@code AlgorithmDayXTest}</li>
-     * </ul>
-     */
-    private void step2_fillJavaClassesAndExpected() {
+        FileInstanceCreator fileInstanceCreator = new FileInstanceCreator(determineHomeDirectory(), year, day);
         TemplateGenerator templateGenerator = new TemplateGenerator();
-        MyFileUtils.overwriteContentOfFile(fileInstanceCreator.algorithmDay(), templateGenerator.generateAlgorithmDay(day));
-        MyFileUtils.overwriteContentOfFile(fileInstanceCreator.algorithmDayTest(), templateGenerator.generateAlgorithmDayTest(day));
-        MyFileUtils.overwriteContentOfFile(fileInstanceCreator.expected(), templateGenerator.generateExpectedYaml());
+
+        if (!fileInstanceCreator.yearPom().exists()) {
+            createNewModule(fileInstanceCreator, templateGenerator);
+        }
+        overwriteContentOfFile(fileInstanceCreator.algorithmDay(), templateGenerator.generateAlgorithmDay(day));
+        overwriteContentOfFile(fileInstanceCreator.algorithmDayTest(), templateGenerator.generateAlgorithmDayTest(day));
+        overwriteContentOfFile(fileInstanceCreator.expected(), templateGenerator.generateExpectedYaml());
+        touchFile(fileInstanceCreator.example());
+        downloadAndFillInputFile(fileInstanceCreator.input());
     }
 
-    private void step3_downloadAndFillInput() {
+    /**
+     * Creates the new {@code pom.xml} and updates the parent pom to include the new module.
+     */
+    private void createNewModule(FileInstanceCreator fileInstanceCreator, TemplateGenerator templateGenerator) {
+        overwriteContentOfFile(fileInstanceCreator.yearPom(), templateGenerator.generatePom(year));
+
+        String parentPom = readFile(fileInstanceCreator.parentPom());
+        // Take the line-ending into account when replacing.
+        parentPom = parentPom.replaceAll("</module>(\r?\n) {4}</modules>",
+                "</module>$1        <module>year-%s</module>$1    </modules>".formatted(year));
+        overwriteContentOfFile(fileInstanceCreator.parentPom(), parentPom);
+    }
+
+    private void downloadAndFillInputFile(File inputFile) {
         HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest httpRequest = HttpRequest.newBuilder(URI.create("https://adventofcode.com/" + year + "/day/" + day + "/input"))
                 .header("Cookie", AdventOfCodeSessionManager.INSTANCE.getSession())
@@ -77,6 +71,6 @@ public class Generate implements Runnable {
             throw new RuntimeException("Response was not 200");
         }
 
-        MyFileUtils.overwriteContentOfFile(fileInstanceCreator.input(), response.body());
+        overwriteContentOfFile(inputFile, response.body());
     }
 }

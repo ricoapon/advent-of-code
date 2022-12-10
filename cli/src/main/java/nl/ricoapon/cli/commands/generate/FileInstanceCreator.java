@@ -14,16 +14,24 @@ public class FileInstanceCreator {
     public FileInstanceCreator(File homeDirectory, int year, int day) {
         this.homeDirectory = homeDirectory;
         this.day = day;
-        startingPath = "year-" + year + "/src/";
-        resourceStartingPath = startingPath + "main/resources/day" + day + "/";
+        startingPath = "year-" + year + "/";
+        resourceStartingPath = startingPath + "src/main/resources/day" + day + "/";
+    }
+
+    public File parentPom() {
+        return fileOf(startingPath + "../pom.xml");
+    }
+
+    public File yearPom() {
+        return fileOf(startingPath + "pom.xml");
     }
 
     public File algorithmDay() {
-        return fileOf(startingPath + "main/java/nl/ricoapon/day" + day + "/AlgorithmDay" + day + ".java");
+        return fileOf(startingPath + "src/main/java/nl/ricoapon/day" + day + "/AlgorithmDay" + day + ".java");
     }
 
     public File algorithmDayTest() {
-        return fileOf(startingPath + "test/java/nl/ricoapon/day" + day + "/AlgorithmDay" + day + "Test.java");
+        return fileOf(startingPath + "src/test/java/nl/ricoapon/day" + day + "/AlgorithmDay" + day + "Test.java");
     }
 
     public File expected() {

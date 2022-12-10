@@ -36,11 +36,22 @@ public class MyFileUtils {
      * @param content The content to write.
      * @throws RuntimeException If anything went wrong when writing into the file.
      */
-    public static void overwriteContentOfFile(File file, String content) throws RuntimeException {
+    public static void overwriteContentOfFile(File file, String content) {
         try {
             FileUtils.writeStringToFile(file, content, StandardCharsets.UTF_8);
         } catch (IOException e) {
             throw new RuntimeException("Could not write to file", e);
+        }
+    }
+
+    /**
+     * @return The content of the file.
+     */
+    public static String readFile(File file) {
+        try {
+            return FileUtils.readFileToString(file, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not read file", e);
         }
     }
 }
