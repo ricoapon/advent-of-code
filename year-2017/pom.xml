@@ -5,22 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>nl.ricoapon.advent-of-code</groupId>
-        <artifactId>parent</artifactId>
+        <artifactId>year-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../year-parent/pom.xml</relativePath>
     </parent>
 
     <artifactId>year-2017</artifactId>
-
-    <dependencies>
-        <dependency>
-            <groupId>nl.ricoapon.advent-of-code</groupId>
-            <artifactId>framework</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>nl.ricoapon.advent-of-code</groupId>
-            <artifactId>utilities</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-    </dependencies>
 </project>
