@@ -1,16 +1,34 @@
 package nl.ricoapon;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 public class GridWithCoordinates<C> {
     private final List<List<Pair<Coordinate2D, C>>> grid;
     private final int sizeX;
     private final int sizeY;
+
+    public static <C> GridWithCoordinates<C> ofString(String input, Function<String, C> convert) {
+        List<List<C>> grid = Arrays.stream(input.split("\n"))
+                .map(s -> Arrays.asList(s.split("")))
+                .map(l -> l.stream().map(convert).toList())
+                .toList();
+        return new GridWithCoordinates<>(grid);
+    }
+
+    public static <C> GridWithCoordinates<C> ofCharacters(String input, Function<Character, C> convert) {
+        List<List<C>> grid = Arrays.stream(input.split("\n"))
+                .map(s -> Arrays.asList(s.split("")))
+                .map(l -> l.stream().map(c -> convert.apply(c.toCharArray()[0])).toList())
+                .toList();
+        return new GridWithCoordinates<>(grid);
+    }
 
     public GridWithCoordinates(List<List<C>> gridWithoutCoordinates) {
         this.sizeX = gridWithoutCoordinates.size();
@@ -27,13 +45,6 @@ public class GridWithCoordinates<C> {
     }
 
     /**
-     * @return The cell at the coordinate {@code (x,y)}.
-     */
-    public C getCell(int x, int y) {
-        return getCell(new Coordinate2D(x, y));
-    }
-
-    /**
      * @return The cell at the given coordinate.
      */
     public C getCell(Coordinate2D coordinate) {
@@ -41,33 +52,10 @@ public class GridWithCoordinates<C> {
     }
 
     /**
-     * @param c The cell to find.
-     * @return The coordinate of the cell.
-     */
-    public Coordinate2D determineCoordinates(C c) {
-        for (int x = 0; x < sizeX; x++) {
-            for (int y = 0; y < sizeY; y++) {
-                if (grid.get(x).get(y).r() == c) {
-                    return new Coordinate2D(x, y);
-                }
-            }
-        }
-        throw new RuntimeException("Grid does not contain given cell");
-    }
-
-    /**
      * @return {@link Stream} of all elements in the grid.
      */
     public Stream<Pair<Coordinate2D, C>> stream() {
         return grid.stream().flatMap(Collection::stream);
-    }
-
-    /**
-     * @param c The given cell.
-     * @return {@link Set} of all coordinates that are either horizontally or vertically adjacent to the given cell.
-     */
-    public Set<Coordinate2D> determineHorizontalAndVerticalAdjacentCoordinates(C c) {
-        return determineHorizontalAndVerticalAdjacentCoordinates(determineCoordinates(c));
     }
 
     /**
@@ -100,14 +88,6 @@ public class GridWithCoordinates<C> {
     }
 
     /**
-     * @param c The given cell.
-     * @return {@link Set} of all coordinates that are diagonally adjacent to the given cell.
-     */
-    public Set<Coordinate2D> determineDiagonallyAdjacentCoordinates(C c) {
-        return determineDiagonallyAdjacentCoordinates(determineCoordinates(c));
-    }
-
-    /**
      * @param coordinate The given coordinate.
      * @return {@link Set} of all coordinates that are diagonally adjacent to the given coordinates.
      */
@@ -134,14 +114,6 @@ public class GridWithCoordinates<C> {
         }
 
         return adjacentCoordinates;
-    }
-
-    /**
-     * @param c The given cell.
-     * @return {@link Set} of all coordinates that are adjacent (horizontally, vertically or diagonally) to the given cell.
-     */
-    public Set<Coordinate2D> determineAllAdjacentCoordinates(C c) {
-        return determineAllAdjacentCoordinates(determineCoordinates(c));
     }
 
     /**
