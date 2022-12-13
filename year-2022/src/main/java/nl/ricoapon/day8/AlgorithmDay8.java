@@ -174,18 +174,14 @@ public class AlgorithmDay8 implements Algorithm {
     public String part2(String input) {
         Grid<Integer> trees = createGrid(input);
         int maxScenicScore = 0;
-        Coordinate maxCoordinate = null;
         for (int x = 0; x < trees.getSizeX(); x++) {
             for (int y = 0; y < trees.getSizeY(); y++) {
                 int scenicScore = calculateScenicScoreFromTree(trees, new Coordinate(x, y));
                 if (maxScenicScore < scenicScore) {
                     maxScenicScore = scenicScore;
-                    maxCoordinate = new Coordinate(x, y);
                 }
             }
         }
-
-        System.out.println(maxCoordinate);
 
         return "" + maxScenicScore;
     }

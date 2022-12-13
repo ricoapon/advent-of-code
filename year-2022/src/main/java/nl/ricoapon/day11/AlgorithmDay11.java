@@ -22,10 +22,6 @@ public class AlgorithmDay11 implements Algorithm {
 
         for (int i = 0; i < 10000; i++) {
             monkeyGame.playRound(false);
-
-            if (i % 100 == 0) {
-                System.out.println("Finished round " + i);
-            }
         }
 
         return "" + monkeyGame.getMonkeyBusiness();

@@ -4,10 +4,8 @@ import nl.ricoapon.graphs.SimpleGraph;
 import nl.ricoapon.graphs.SimplePath;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class PathCalculator {
@@ -30,7 +28,7 @@ public class PathCalculator {
     private void dfs(String startNode, String endNode, List<String> currentPath, Set<SimplePath<String>> allPaths) {
         if (startNode.equals(endNode)) {
             // We are at the end, so we found a path.
-            allPaths.add(new SimplePath<>(currentPath));
+            allPaths.add(new SimplePath<String>(currentPath));
             return;
         }
 
