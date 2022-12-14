@@ -46,6 +46,8 @@ public class AlgorithmDay14 implements Algorithm {
 
             previous = corner;
         }
+        // The last part may not be forgotten!
+        coordinates.add(previous);
 
         return coordinates;
     }
