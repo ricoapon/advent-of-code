@@ -1,3 +1,4 @@
 {
-    "java.jdt.ls.java.home": "/usr/lib/jvm/msopenjdk-current"
+    "java.jdt.ls.java.home": "/usr/lib/jvm/msopenjdk-current",
+    "debug.console.collapseIdenticalLines": false,
 }
