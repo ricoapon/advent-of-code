@@ -54,29 +54,36 @@ public class AlgorithmDay14 implements Algorithm {
 
     @Override
     public String part1(String input) {
-        Cave cave = new Cave();
+        Cave cave = new Cave(false);
 
         Arrays.stream(input.split("\r?\n"))
                 .flatMap(s -> convertLine(s).stream())
                 .forEach(cave::addRock);
 
-        cave.printSituation();
-        System.out.println("\n");
-
         int counter = 0;
         while (cave.dropSand()) {
             counter++;
         }
-        cave.printSituation();
-        System.out.println("\n");
 
-
-        // 1075 and 1076 were too low.
         return "" + counter;
     }
 
     @Override
     public String part2(String input) {
-        return "x";
+        Cave cave = new Cave(true);
+
+        Arrays.stream(input.split("\r?\n"))
+                .flatMap(s -> convertLine(s).stream())
+                .forEach(cave::addRock);
+
+        int counter = 0;
+        while (cave.dropSand()) {
+            counter++;
+        }
+
+        // The sand located in (500,0) is not counted, because that returned false. But we do need to add it.
+        counter++;
+
+        return "" + counter;
     }
 }
