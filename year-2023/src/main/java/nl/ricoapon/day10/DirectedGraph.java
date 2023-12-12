@@ -1,4 +1,4 @@
-package nl.ricoapon.graphs;
+package nl.ricoapon.day10;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -6,15 +6,10 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Graph implementation where the graph satisfies the following constraints:
- * <ul>
- *     <li>Unweighted</li>
- *     <li>Undirected</li>
- *     <li>No loops or multiple edges</li>
- * </ul>
+ * Directed graph.
  * @param <N> The type of nodes.
  */
-public class SimpleGraph<N> {
+public class DirectedGraph<N> {
     private final Map<N, Set<N>> edges = new HashMap<>();
 
     public void addNode(N node){
@@ -27,7 +22,6 @@ public class SimpleGraph<N> {
         }
         
         edges.get(source).add(target);
-        edges.get(target).add(source);
     }
 
     public boolean containsNode(N node) {

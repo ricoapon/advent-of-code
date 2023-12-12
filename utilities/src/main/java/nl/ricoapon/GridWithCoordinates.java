@@ -126,4 +126,12 @@ public class GridWithCoordinates<C> {
         adjacentCoordinates.addAll(determineDiagonallyAdjacentCoordinates(coordinate));
         return adjacentCoordinates;
     }
+
+    public int getSizeX() {
+        return sizeX;
+    }
+
+    public int getSizeY() {
+        return sizeY;
+    }
 }
