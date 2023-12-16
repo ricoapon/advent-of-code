@@ -2,5 +2,5 @@ part1:
   input: 449820
   example: 288
 part2:
-  input: x
+  input: 42250895
   example: 71503
