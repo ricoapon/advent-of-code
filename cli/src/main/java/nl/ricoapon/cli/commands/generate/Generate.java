@@ -35,8 +35,8 @@ public class Generate implements Runnable {
         if (!fileInstanceCreator.yearPom().exists()) {
             createNewModule(fileInstanceCreator, templateGenerator);
         }
-        overwriteContentOfFile(fileInstanceCreator.algorithmDay(), templateGenerator.generateAlgorithmDay(day));
-        overwriteContentOfFile(fileInstanceCreator.algorithmDayTest(), templateGenerator.generateAlgorithmDayTest(day));
+        overwriteContentOfFile(fileInstanceCreator.algorithmDay(), templateGenerator.generateAlgorithmDay(year, day));
+        overwriteContentOfFile(fileInstanceCreator.algorithmDayTest(), templateGenerator.generateAlgorithmDayTest(year, day));
         overwriteContentOfFile(fileInstanceCreator.expected(), templateGenerator.generateExpectedYaml());
         touchFile(fileInstanceCreator.example());
         downloadAndFillInputFile(fileInstanceCreator.input());

@@ -1,57 +1,57 @@
 package nl.ricoapon.cli.commands.generate;
 
 public class TemplateGenerator {
-    public String generateAlgorithmDay(int day) {
+    public String generateAlgorithmDay(int year, int day) {
         return """
-                package nl.ricoapon.day%s;
-                                
+                package nl.ricoapon.year%s.day%s;
+                
                 import nl.ricoapon.framework.Algorithm;
-                                
+                
                 public class AlgorithmDay%s implements Algorithm {
                     @Override
                     public String part1(String input) {
                         return "x";
                     }
-                    
+                
                     @Override
                     public String part2(String input) {
                         return "x";
                     }
                 }
-                """.formatted(day, day);
+                """.formatted(year, day, day);
     }
 
-    public String generateAlgorithmDayTest(int day) {
+    public String generateAlgorithmDayTest(int year, int day) {
         return """
-                package nl.ricoapon.day%s;
-                                
+                package nl.ricoapon.year%s.day%s;
+                
                 import nl.ricoapon.framework.testrunner.AlgorithmDayTestRunnerUtil;
                 import org.junit.jupiter.api.Test;
-                                
+                
                 class AlgorithmDay%sTest {
-                    private final AlgorithmDayTestRunnerUtil algorithmDayTestRunnerUtil = new AlgorithmDayTestRunnerUtil(%s);
-                                
+                    private final AlgorithmDayTestRunnerUtil algorithmDayTestRunnerUtil = new AlgorithmDayTestRunnerUtil(%s, %s);
+                    
                     @Test
                     void part1_example() {
                         algorithmDayTestRunnerUtil.testAllExamples(1);
                     }
-                                
+                    
                     @Test
                     void part1() {
                         algorithmDayTestRunnerUtil.testInput(1);
                     }
-                                
+                    
                     @Test
                     void part2_example() {
                         algorithmDayTestRunnerUtil.testAllExamples(2);
                     }
-                                
+                    
                     @Test
                     void part2() {
                         algorithmDayTestRunnerUtil.testInput(2);
                     }
                 }
-                """.formatted(day, day, day);
+                """.formatted(year, day, day, year, day);
     }
 
     public String generateExpectedYaml() {
