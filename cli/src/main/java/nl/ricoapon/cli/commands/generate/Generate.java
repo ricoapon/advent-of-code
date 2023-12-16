@@ -9,6 +9,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDate;
+import java.time.Month;
 
 import static nl.ricoapon.cli.MyFileUtils.determineHomeDirectory;
 import static nl.ricoapon.cli.MyFileUtils.overwriteContentOfFile;
@@ -20,15 +22,44 @@ import static nl.ricoapon.cli.MyFileUtils.touchFile;
 public class Generate implements Runnable {
 
     @SuppressWarnings("unused")
-    @CommandLine.Parameters(index = "0", description = "The year of the problem to solve")
-    private int year;
+    @CommandLine.Parameters(index = "0", description = "The day of the problem to solve", defaultValue = CommandLine.Parameters.NULL_VALUE)
+    private Integer day;
 
     @SuppressWarnings("unused")
-    @CommandLine.Parameters(index = "1", description = "The day of the problem to solve")
-    private int day;
+    @CommandLine.Parameters(index = "1", description = "The year of the problem to solve", defaultValue = CommandLine.Parameters.NULL_VALUE)
+    private Integer year;
+
+    /**
+     * The day and year should be filled automatically with the current day and year, since it is most likely that the
+     * generator is used on the day that the puzzle came out. It is not possible to do this with Picocli annotations, so
+     * we use this method to override null values with dynamically determined defaults.
+     */
+    private void setParameterDefaultsIfNeeded() {
+        LocalDate now = LocalDate.now();
+
+        if (year == null) {
+            // We want to find the year of the most recent puzzle. If it is not December yet, this means it was last year
+            // and not this year.
+            int adventOfCodeYear = now.getYear();
+            if (now.getMonth() != Month.DECEMBER) {
+                adventOfCodeYear--;
+            }
+            year = adventOfCodeYear;
+        }
+
+        if (day == null) {
+            if (now.getMonth() != Month.DECEMBER || now.getDayOfMonth() > 25) {
+                throw new RuntimeException("No new Advent of Code puzzle came out today. Please specify the day");
+            }
+
+            day = now.getDayOfMonth();
+        }
+    }
 
     @Override
     public void run() {
+        setParameterDefaultsIfNeeded();
+
         FileInstanceCreator fileInstanceCreator = new FileInstanceCreator(determineHomeDirectory(), year, day);
         TemplateGenerator templateGenerator = new TemplateGenerator();
 

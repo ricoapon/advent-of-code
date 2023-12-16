@@ -14,8 +14,12 @@ To automatically download input, you need to set your session:
 To make it easy to create files that adhere to the standard a tool has been added. You can now use the command:
 
 ```
-./advent g <year> <day>
+./advent g <day> <year>
 ```
+
+Both the day and year parameter are optional. The default of the year is the year of the most recent Advent of Code
+puzzle. If it is December, the default of the day is the day of the month. If day is not specified, and no Advent of Code
+puzzle came out today, an error is thrown.
 
 ## Module details
 
