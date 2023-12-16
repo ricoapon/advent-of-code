@@ -1,13 +1,13 @@
 package nl.ricoapon.year2023.day10;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import nl.ricoapon.Coordinate2D;
 import nl.ricoapon.GridWithCoordinates;
 import nl.ricoapon.Pair;
 import nl.ricoapon.framework.Algorithm;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class AlgorithmDay10 implements Algorithm {
 
@@ -18,7 +18,7 @@ public class AlgorithmDay10 implements Algorithm {
             GridWithCoordinates<String> grid = GridWithCoordinates.ofString(input, s -> s);
 
             // Add all the coordinates as nodes.
-            for (Coordinate2D c : grid.stream().map(p -> p.l()).toList()) {
+            for (Coordinate2D c : grid.stream().map(Pair::l).toList()) {
                 graph.addNode(c);
             }
 
@@ -116,11 +116,6 @@ public class AlgorithmDay10 implements Algorithm {
 
     @Override
     public String part2(String input) {
-        // Move from left to right. If you come across a path node, you are inside.
-        // If you find another path node, you are outside. Mark any nodes half-inside.
-        // Then repeat from top to bottom, same algorithm. If you marked nodes
-        // half-inside twice, it is inside.
-
         return "x";
     }
 }

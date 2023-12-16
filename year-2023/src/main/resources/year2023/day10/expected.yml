@@ -5,7 +5,7 @@ part1:
   example3: 4
 part2:
   input: x
-  example4: 4
-  example5: 4
-  example6: 8
-  example7: 10
+  example4: x
+  example5: x
+  example6: x
+  example7: x
