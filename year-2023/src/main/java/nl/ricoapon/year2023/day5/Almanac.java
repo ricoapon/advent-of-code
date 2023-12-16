@@ -18,8 +18,16 @@ public record Almanac(List<Long> initialSeeds, List<ToMap> toMaps) {
             return sourceStart <= sourceValue && sourceValue <= sourceStart + range - 1;
         }
 
-        public long convertSourceToRange(long sourceValue) {
+        public long convertSourceToDestination(long sourceValue) {
             return sourceValue - sourceStart + destinationStart;
+        }
+
+        public boolean isDestinationPartOfRange(long destinationValue) {
+            return destinationStart <= destinationValue && destinationValue <= destinationStart + range - 1;
+        }
+
+        public long convertDestinationToSource(long destinationValue) {
+            return destinationValue - destinationStart + sourceStart;
         }
     }
 
@@ -41,14 +49,27 @@ public record Almanac(List<Long> initialSeeds, List<ToMap> toMaps) {
 
         public long convertSourceToDestination(long sourceValue) {
             // I assume there is only one range which contains the value, but to be sure we
-            // check this explicitely.
+            // check this explicitly.
             List<Range> matchingRanges = ranges.stream().filter(r -> r.isSourcePartOfRange(sourceValue)).toList();
             if (matchingRanges.size() > 1) {
                 throw new RuntimeException("This should not happen");
             } else if (matchingRanges.size() == 1) {
-                return matchingRanges.get(0).convertSourceToRange(sourceValue);
+                return matchingRanges.get(0).convertSourceToDestination(sourceValue);
             } else {
                 return sourceValue;
+            }
+        }
+
+        public long convertDestinationToSource(long destinationValue) {
+            // I assume there is only one range which contains the value, but to be sure we
+            // check this explicitly.
+            List<Range> matchingRanges = ranges.stream().filter(r -> r.isDestinationPartOfRange(destinationValue)).toList();
+            if (matchingRanges.size() > 1) {
+                throw new RuntimeException("This should not happen");
+            } else if (matchingRanges.size() == 1) {
+                return matchingRanges.get(0).convertDestinationToSource(destinationValue);
+            } else {
+                return destinationValue;
             }
         }
     }
@@ -67,9 +88,21 @@ public record Almanac(List<Long> initialSeeds, List<ToMap> toMaps) {
     }
 
     public long convertFromSeedToLocation(long seed) {
+        return convertFromSourceToFinalDestination(seed, 0);
+    }
+
+    public long convertFromSourceToFinalDestination(long seed, int mapIndex) {
         long value = seed;
-        for (ToMap toMap : toMaps) {
-            value = toMap.convertSourceToDestination(value);
+        for (int i = mapIndex; i < toMaps.size(); i++) {
+            value = toMaps.get(i).convertSourceToDestination(value);
+        }
+        return value;
+    }
+
+    public long convertFromDestinationToFinalSource(long seed, int mapIndex) {
+        long value = seed;
+        for (int i = mapIndex; i >= 0; i--) {
+            value = toMaps.get(i).convertDestinationToSource(value);
         }
         return value;
     }
