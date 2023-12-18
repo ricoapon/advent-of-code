@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.List;
 import java.util.stream.Stream;
 
-import nl.ricoapon.year2023.day7.Hand;
 import org.junit.jupiter.api.Test;
 
 class AlgorithmDay7Test {
