@@ -10,7 +10,7 @@ import nl.ricoapon.framework.Algorithm;
 
 public class AlgorithmDay8 implements Algorithm {
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         long count = Arrays.stream(input.split("\n"))
                 .map(s -> s.split("\\|")[1])
                 .flatMap(s -> Arrays.stream(s.split(" ")))
@@ -22,7 +22,7 @@ public class AlgorithmDay8 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         List<String> lines = Arrays.stream(input.split("\n")).toList();
         return String.valueOf(lines.stream().mapToInt(this::calculateNumber).sum());
     }

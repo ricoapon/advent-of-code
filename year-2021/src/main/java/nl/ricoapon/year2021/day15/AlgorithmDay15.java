@@ -41,7 +41,7 @@ public class AlgorithmDay15 implements Algorithm {
     }
 
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         List<List<Integer>> weights = Arrays.stream(input.split("\n"))
                 .map(s -> Arrays.asList(s.split("")))
                 .map(l -> l.stream().map(Integer::parseInt).toList())
@@ -52,7 +52,7 @@ public class AlgorithmDay15 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         List<List<Integer>> weights = Arrays.stream(input.split("\n"))
                 .map(s -> Arrays.asList(s.split("")))
                 .map(l -> l.stream().map(Integer::parseInt).toList())

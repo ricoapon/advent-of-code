@@ -9,7 +9,7 @@ import nl.ricoapon.framework.Algorithm;
 
 public class AlgorithmDay4 implements Algorithm {
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         List<String> inputAsList = Arrays.stream(input.split("\n\n")).collect(Collectors.toCollection(ArrayList::new));
         List<Integer> drawnNumbers = Arrays.stream(inputAsList.get(0).split(",")).map(Integer::parseInt).toList();
         inputAsList.remove(0);
@@ -28,7 +28,7 @@ public class AlgorithmDay4 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         List<String> inputAsList = Arrays.stream(input.split("\n\n")).collect(Collectors.toCollection(ArrayList::new));
         List<Integer> drawnNumbers = Arrays.stream(inputAsList.get(0).split(",")).map(Integer::parseInt).toList();
         inputAsList.remove(0);

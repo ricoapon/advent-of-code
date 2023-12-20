@@ -96,7 +96,7 @@ public class AlgorithmDay13 implements Algorithm {
     }
 
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         List<String> inputPairs = Arrays.stream(input.split("\r?\n\r?\n")).toList();
         int sum = 0;
         for (int i = 0; i < inputPairs.size(); i++) {
@@ -114,7 +114,7 @@ public class AlgorithmDay13 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         List<ListNode> listNodes = Arrays.stream(input.split("\r?\n"))
                 .filter(l -> l.length() > 0)
                 .map(AlgorithmDay13::ofLine)

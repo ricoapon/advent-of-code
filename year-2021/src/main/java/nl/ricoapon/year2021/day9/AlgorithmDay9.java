@@ -27,7 +27,7 @@ public class AlgorithmDay9 implements Algorithm {
     }
 
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         Grid<Cell> grid = createGrid(input);
         int sum = grid.stream()
                 .filter(cell -> isLowPoint(cell, grid.determineHorizontalAndVerticalAdjacentCells(cell)))
@@ -46,7 +46,7 @@ public class AlgorithmDay9 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         Grid<Cell> grid = createGrid(input);
         List<Cell> lowPoints = grid.stream()
                 .filter(cell -> isLowPoint(cell, grid.determineHorizontalAndVerticalAdjacentCells(cell)))

@@ -13,7 +13,7 @@ public class AlgorithmDay25 implements Algorithm {
     private final static Pattern STARTING_INPUT = Pattern.compile("Begin in state (.)\\.\nPerform a diagnostic checksum after (\\d+) steps.");
 
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         List<String> inputParts = Arrays.stream(input.split("\n\n")).toList();
         Matcher matcher = STARTING_INPUT.matcher(inputParts.get(0));
         if (!matcher.matches()) {
@@ -36,11 +36,11 @@ public class AlgorithmDay25 implements Algorithm {
             stateExecutor = stateExecutorInstances.get(stateExecutor.execute(machine));
         }
 
-        return String.valueOf(machine.getDiagnosticCheckSum());
+        return machine.getDiagnosticCheckSum();
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         return "x";
     }
 }

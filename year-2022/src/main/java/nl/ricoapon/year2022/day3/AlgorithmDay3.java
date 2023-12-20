@@ -8,7 +8,7 @@ import nl.ricoapon.framework.Algorithm;
 
 public class AlgorithmDay3 implements Algorithm {
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         int max = Arrays.stream(input.split("\r?\n")).map(this::findDoubleItem).map(this::determineScore).reduce(0, Integer::sum);
         return String.valueOf(max);
     }
@@ -35,7 +35,7 @@ public class AlgorithmDay3 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         int i = 0;
         String[] inputArray = input.split("\r?\n");
         int sum = 0;

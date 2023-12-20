@@ -27,7 +27,7 @@ public class AlgorithmDay12 implements Algorithm {
     }
 
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         SimpleGraph<String> graph = createGraph(input);
         PathCalculator pathCalculator = new PathCalculator(graph, new HasVisitedNodePart1());
         Set<SimplePath<String>> allPaths = pathCalculator.calculateAllPaths("start", "end");
@@ -35,7 +35,7 @@ public class AlgorithmDay12 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         SimpleGraph<String> graph = createGraph(input);
         PathCalculator pathCalculator = new PathCalculator(graph, new HasVisitedNodePart2());
         Set<SimplePath<String>> allPaths = pathCalculator.calculateAllPaths("start", "end");

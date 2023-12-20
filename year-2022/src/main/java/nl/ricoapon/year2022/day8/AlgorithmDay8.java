@@ -98,7 +98,7 @@ public class AlgorithmDay8 implements Algorithm {
     }
 
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         Grid<Integer> trees = createGrid(input);
         Set<Coordinate> visibleTrees = new HashSet<>();
 
@@ -171,7 +171,7 @@ public class AlgorithmDay8 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         Grid<Integer> trees = createGrid(input);
         int maxScenicScore = 0;
         for (int x = 0; x < trees.getSizeX(); x++) {

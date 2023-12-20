@@ -38,14 +38,14 @@ public class AlgorithmDay7 implements Algorithm {
     }
 
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         FileSystem fileSystem = parseCommandsIntoFileSystem(input);
         List<FileSystem.Directory> smallDirectories = fileSystem.getDirectoriesWithSizeAtMost100_000();
         return "" + smallDirectories.stream().mapToInt(FileSystem.Directory::getSize).sum();
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         FileSystem fileSystem = parseCommandsIntoFileSystem(input);
         int sizeUsed = fileSystem.getTotalSize();
         int maxSize = 70_000_000;

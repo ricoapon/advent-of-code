@@ -81,7 +81,7 @@ public class AlgorithmDay10 implements Algorithm {
     }
 
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         Graph graph = Graph.of(input);
 
         // We can find any path from S to S, because we know there is only a single loop
@@ -89,9 +89,7 @@ public class AlgorithmDay10 implements Algorithm {
         List<Coordinate2D> path = calculatePath(graph);
 
         // The path output will go from S to S, including S twice.
-        int result = path.size() / 2;
-
-        return String.valueOf(result);
+        return path.size() / 2;
     }
 
     private List<Coordinate2D> calculatePath(Graph graph) {
@@ -115,7 +113,7 @@ public class AlgorithmDay10 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         return "x";
     }
 }

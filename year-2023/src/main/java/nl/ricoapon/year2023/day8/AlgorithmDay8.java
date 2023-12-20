@@ -8,12 +8,10 @@ import java.util.function.Function;
 
 public class AlgorithmDay8 implements Algorithm {
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         Documents documents = Documents.of(input);
 
-        int count = countSteps(documents, "AAA");
-
-        return String.valueOf(count);
+        return countSteps(documents, "AAA");
     }
 
     private int countSteps(Documents documents, String startingNode) {
@@ -33,7 +31,7 @@ public class AlgorithmDay8 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         Documents documents = Documents.of(input);
 
         // Count the number of steps for every node into a list.
@@ -43,9 +41,7 @@ public class AlgorithmDay8 implements Algorithm {
             .toList();
         
         // Now we need to find the LCM which is the answer.
-        long lcm = nodesCount.stream().reduce((i1, i2) -> lcm(i1, i2)).orElseThrow();
-
-        return String.valueOf(lcm);
+        return nodesCount.stream().reduce(AlgorithmDay8::lcm).orElseThrow();
     }
 
     // Copy and pasted this from the internet.

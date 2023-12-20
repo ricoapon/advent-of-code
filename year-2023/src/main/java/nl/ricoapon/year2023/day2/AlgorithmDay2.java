@@ -8,13 +8,12 @@ import nl.ricoapon.framework.Algorithm;
 
 public class AlgorithmDay2 implements Algorithm {
     @Override
-    public String part1(String input) {
-        int result = Arrays.stream(input.split("\\r?\\n"))
+    public Object part1(String input) {
+        return Arrays.stream(input.split("\\r?\\n"))
                 .map(Game::of)
                 .filter(this::isGamePossible)
                 .mapToInt(Game::id)
                 .sum();
-        return String.valueOf(result);
     }
 
     private boolean isGamePossible(Game game) {
@@ -27,12 +26,11 @@ public class AlgorithmDay2 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
-        Integer result = Arrays.stream(input.split("\\r?\\n"))
+    public Object part2(String input) {
+        return Arrays.stream(input.split("\\r?\\n"))
                 .map(Game::of)
                 .mapToInt(this::determinePower)
                 .sum();
-        return String.valueOf(result);
     }
 
     private int determinePower(Game game) {
@@ -45,7 +43,7 @@ public class AlgorithmDay2 implements Algorithm {
 
     private int determineMinimumNeededCubes(Game game, Function<Revealed, Integer> getColorCount) {
         return game.revealedList().stream()
-                .mapToInt(r -> getColorCount.apply(r))
+                .mapToInt(getColorCount::apply)
                 .max().orElseThrow();
     }
 }

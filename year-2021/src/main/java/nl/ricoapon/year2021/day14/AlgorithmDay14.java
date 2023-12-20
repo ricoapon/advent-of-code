@@ -70,12 +70,12 @@ public class AlgorithmDay14 implements Algorithm {
 
 
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         return String.valueOf(doAlgorithm(input, 10));
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         return String.valueOf(doAlgorithm(input, 40));
     }
 }

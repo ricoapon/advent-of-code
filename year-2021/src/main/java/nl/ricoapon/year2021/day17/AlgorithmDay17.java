@@ -34,7 +34,7 @@ public class AlgorithmDay17 implements Algorithm {
     }
 
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         List<PossibleStartingVelocity> possibleStartingVelocityList = calculatePossibleStartingVelocityList(input);
         int maxHeight = possibleStartingVelocityList.stream().mapToInt(this::calculateMaxHeight).max().orElseThrow();
 
@@ -53,7 +53,7 @@ public class AlgorithmDay17 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         return String.valueOf(calculatePossibleStartingVelocityList(input).size());
     }
 

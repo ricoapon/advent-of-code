@@ -40,7 +40,7 @@ public class AlgorithmDay12 implements Algorithm {
     }
 
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         WeightedDirectedGraph<Pair<Coordinate2D, Node>> graph = createGraph(input);
 
         // Find start and end node.
@@ -56,7 +56,7 @@ public class AlgorithmDay12 implements Algorithm {
 
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         WeightedDirectedGraph<Pair<Coordinate2D, Node>> graph = createGraph(input);
 
         // Find start nodes and end node.

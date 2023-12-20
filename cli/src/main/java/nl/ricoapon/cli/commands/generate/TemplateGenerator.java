@@ -9,12 +9,12 @@ public class TemplateGenerator {
                 
                 public class AlgorithmDay%s implements Algorithm {
                     @Override
-                    public String part1(String input) {
+                    public Object part1(String input) {
                         return "x";
                     }
                 
                     @Override
-                    public String part2(String input) {
+                    public Object part2(String input) {
                         return "x";
                     }
                 }

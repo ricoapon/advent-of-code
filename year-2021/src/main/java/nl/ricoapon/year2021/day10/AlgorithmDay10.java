@@ -12,7 +12,7 @@ public class AlgorithmDay10 implements Algorithm {
     private final static Map<Character, BigInteger> pointMapPart2 = Map.of(')', BigInteger.ONE, ']', BigInteger.TWO, '}', BigInteger.valueOf(3), '>', BigInteger.valueOf(4));
 
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         List<String> lines = Arrays.stream(input.split("\n")).toList();
         ChunkLineValidator chunkLineValidator = new ChunkLineValidator();
 
@@ -26,7 +26,7 @@ public class AlgorithmDay10 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         List<String> lines = Arrays.stream(input.split("\n")).toList();
         ChunkLineValidator chunkLineValidator = new ChunkLineValidator();
 

@@ -5,11 +5,10 @@ import nl.ricoapon.framework.Algorithm;
 
 public class AlgorithmDay14 implements Algorithm {
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         Platform platform = Platform.of(input);
         Platform tiltedPlatform = platform.tilt(Platform.Direction.NORTH);
-        long result = scorePlatform(tiltedPlatform);
-        return String.valueOf(result);
+        return scorePlatform(tiltedPlatform);
     }
 
     private long scorePlatform(Platform platform) {
@@ -26,7 +25,7 @@ public class AlgorithmDay14 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         return "x";
     }
 }

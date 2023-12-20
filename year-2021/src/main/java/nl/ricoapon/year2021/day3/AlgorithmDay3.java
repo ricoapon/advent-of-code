@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class AlgorithmDay3 implements Algorithm {
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         List<String> binaryInput = Arrays.stream(input.split("\n")).toList();
         int length = binaryInput.get(0).length();
 
@@ -25,7 +25,7 @@ public class AlgorithmDay3 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         List<String> binaryInput = Arrays.stream(input.split("\n")).toList();
 
         List<String> leftover = binaryInput;

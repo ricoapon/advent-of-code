@@ -7,7 +7,7 @@ import nl.ricoapon.framework.Algorithm;
 
 public class AlgorithmDay7 implements Algorithm {
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         List<Integer> sortedPositions = Arrays.stream(input.split(",")).map(Integer::parseInt).sorted().toList();
 
         // Subtract one since lists start at 0.
@@ -26,7 +26,7 @@ public class AlgorithmDay7 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         List<Integer> positions = Arrays.stream(input.split(",")).map(Integer::parseInt).toList();
 
         double average = positions.stream().mapToDouble(x -> x).average().orElseThrow();

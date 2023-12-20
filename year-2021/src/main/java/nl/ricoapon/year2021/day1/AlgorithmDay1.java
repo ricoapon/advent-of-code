@@ -9,7 +9,7 @@ import nl.ricoapon.framework.Algorithm;
 
 public class AlgorithmDay1 implements Algorithm {
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         return calculateNumberOfIncreases(parseInput(input));
     }
 
@@ -28,7 +28,7 @@ public class AlgorithmDay1 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         List<Integer> threeMeasurements = new ArrayList<>();
         List<Integer> inputList = parseInput(input);
         for (int i = 0; i <= inputList.size() - 1; i++) {

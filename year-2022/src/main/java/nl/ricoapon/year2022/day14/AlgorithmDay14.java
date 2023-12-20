@@ -53,7 +53,7 @@ public class AlgorithmDay14 implements Algorithm {
     }
 
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         Cave cave = new Cave(false);
 
         Arrays.stream(input.split("\r?\n"))
@@ -69,7 +69,7 @@ public class AlgorithmDay14 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         Cave cave = new Cave(true);
 
         Arrays.stream(input.split("\r?\n"))

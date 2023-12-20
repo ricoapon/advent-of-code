@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class AlgorithmDay11 implements Algorithm {
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         MonkeyGame monkeyGame = new MonkeyGame(Arrays.stream(input.split("\r?\n\r?\n")).map(Monkey::of).toList());
 
         for (int i = 0; i < 20; i++) {
@@ -17,7 +17,7 @@ public class AlgorithmDay11 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         MonkeyGame monkeyGame = new MonkeyGame(Arrays.stream(input.split("\r?\n\r?\n")).map(Monkey::of).toList());
 
         for (int i = 0; i < 10000; i++) {

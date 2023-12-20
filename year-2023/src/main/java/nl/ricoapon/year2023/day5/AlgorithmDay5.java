@@ -8,18 +8,16 @@ import java.util.List;
 
 public class AlgorithmDay5 implements Algorithm {
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         Almanac almanac = Almanac.of(input);
-        long minLocation = almanac.initialSeeds().stream().mapToLong(almanac::convertFromSeedToLocation).min().orElseThrow();
-        return String.valueOf(minLocation);
+        return almanac.initialSeeds().stream().mapToLong(almanac::convertFromSeedToLocation).min().orElseThrow();
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         Almanac almanac = Almanac.of(input);
         List<Long> possibleSeeds = determinePossibleSeeds(almanac);
-        long minLocation = possibleSeeds.stream().mapToLong(almanac::convertFromSeedToLocation).min().orElseThrow();
-        return String.valueOf(minLocation);
+        return possibleSeeds.stream().mapToLong(almanac::convertFromSeedToLocation).min().orElseThrow();
     }
 
     // The path of the lowest answer through all the maps must touch at least one boundary of a range. If we calculate

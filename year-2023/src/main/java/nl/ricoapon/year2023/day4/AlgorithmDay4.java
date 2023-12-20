@@ -9,12 +9,11 @@ import nl.ricoapon.framework.Algorithm;
 
 public class AlgorithmDay4 implements Algorithm {
     @Override
-    public String part1(String input) {
-        int result = Arrays.stream(input.split("\\r?\\n"))
+    public Object part1(String input) {
+        return Arrays.stream(input.split("\\r?\\n"))
                 .map(ScratchCard::of)
                 .mapToInt(this::determinePoints)
                 .sum();
-        return String.valueOf(result);
     }
 
     private int countMatchingNumbers(ScratchCard scratchCard) {
@@ -34,7 +33,7 @@ public class AlgorithmDay4 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         List<ScratchCard> scratchCards = Arrays.stream(input.split("\\r?\\n"))
                 .map(ScratchCard::of)
                 .toList();
@@ -53,8 +52,6 @@ public class AlgorithmDay4 implements Algorithm {
             }
         }
 
-        int result = countOfScratchCards.values().stream().mapToInt(i -> i).sum();
-
-        return String.valueOf(result);
+        return countOfScratchCards.values().stream().mapToInt(i -> i).sum();
     }
 }

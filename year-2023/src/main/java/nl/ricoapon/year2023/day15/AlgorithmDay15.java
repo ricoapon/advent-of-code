@@ -12,11 +12,10 @@ import nl.ricoapon.framework.Algorithm;
 
 public class AlgorithmDay15 implements Algorithm {
     @Override
-    public String part1(String input) {
-        int result = Arrays.stream(input.split(","))
+    public Object part1(String input) {
+        return Arrays.stream(input.split(","))
             .mapToInt(this::hash)
             .sum();
-        return String.valueOf(result);
     }
 
     private int hash(String s) {
@@ -28,7 +27,7 @@ public class AlgorithmDay15 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         Map<Integer, List<Pair<String, Integer>>> hashMap = new HashMap<>();
 
         List<String> items = Arrays.stream(input.split(",")).toList();
@@ -43,7 +42,7 @@ public class AlgorithmDay15 implements Algorithm {
                 }
                 removeElement(list, item);
             } else {
-                int focalLength = Integer.valueOf(item.split("=")[1]);
+                int focalLength = Integer.parseInt(item.split("=")[1]);
                 item = item.split("=")[0];
                 int hash = hash(item);
 
@@ -70,11 +69,11 @@ public class AlgorithmDay15 implements Algorithm {
 
             List<Pair<String, Integer>> list = hashMap.get(i);
             for (int j = 0; j < list.size(); j++) {
-                score += (i + 1) * (j + 1) * list.get(j).getR();
+                score += (long) (i + 1) * (j + 1) * list.get(j).getR();
             }
         }
 
-        return String.valueOf(score);
+        return score;
     }
 
     private Optional<Pair<String, Integer>> findInList(List<Pair<String, Integer>> list, String element) {

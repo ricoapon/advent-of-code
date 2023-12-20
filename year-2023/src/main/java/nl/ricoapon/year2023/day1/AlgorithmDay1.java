@@ -9,11 +9,10 @@ import java.util.Comparator;
 
 public class AlgorithmDay1 implements Algorithm {
     @Override
-    public String part1(String input) {
-        int result = Arrays.stream(input.split("\\r?\\n"))
-                .mapToInt(s -> determineIntFromLine(s))
+    public Object part1(String input) {
+        return Arrays.stream(input.split("\\r?\\n"))
+                .mapToInt(this::determineIntFromLine)
                 .sum();
-        return String.valueOf(result);
     }
 
     private Integer determineIntFromLine(String line) {
@@ -38,11 +37,10 @@ public class AlgorithmDay1 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
-        int result = Arrays.stream(input.split("\\r?\\n"))
-                .mapToInt(s -> determineIntFromLinePart2(s))
+    public Object part2(String input) {
+        return Arrays.stream(input.split("\\r?\\n"))
+                .mapToInt(this::determineIntFromLinePart2)
                 .sum();
-        return String.valueOf(result);
     }
 
     private Integer determineIntFromLinePart2(String line) {
@@ -51,13 +49,9 @@ public class AlgorithmDay1 implements Algorithm {
                 "seven", "7", "eight", "8", "nine", "9");
         
         String first = allIntegers.stream()
-                .filter(s -> line.indexOf(s) >= 0)
-                .sorted(Comparator.comparingInt(s -> line.indexOf(s)))
-                .findFirst().get();
+                .filter(line::contains).min(Comparator.comparingInt(line::indexOf)).orElseThrow();
         String last = allIntegers.stream()
-                .filter(s -> line.indexOf(s) >= 0)
-                .sorted(Collections.reverseOrder(Comparator.comparingInt(s -> line.lastIndexOf(s))))
-                .findFirst().get();
+                .filter(line::contains).max(Comparator.comparingInt(line::lastIndexOf)).orElseThrow();
         
         String firstAsIntString = first;
         if (ints.containsKey(first)) {

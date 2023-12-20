@@ -32,11 +32,10 @@ public class AlgorithmDay9 implements Algorithm {
     }
 
     @Override
-    public String part1(String input) {
-        long result = Sequence.of(input).stream()
+    public Object part1(String input) {
+        return Sequence.of(input).stream()
                 .mapToLong(this::determineNextValue)
                 .sum();
-        return String.valueOf(result);
     }
 
     private long determineNextValue(Sequence sequence) {
@@ -48,11 +47,10 @@ public class AlgorithmDay9 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
-        long result = Sequence.of(input).stream()
+    public Object part2(String input) {
+        return Sequence.of(input).stream()
                 .mapToLong(this::determinePreviousValue)
                 .sum();
-        return String.valueOf(result);
     }
 
     private long determinePreviousValue(Sequence sequence) {

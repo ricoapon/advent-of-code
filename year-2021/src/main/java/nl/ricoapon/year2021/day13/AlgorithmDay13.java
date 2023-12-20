@@ -26,7 +26,7 @@ public class AlgorithmDay13 implements Algorithm {
     }
 
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         String[] twoPartInput = input.split("\n\n");
         TransparentPaper transparentPaper = new TransparentPaper(readDots(twoPartInput[0]));
         List<FoldInstruction> foldInstructions = readFoldInstructions(twoPartInput[1]);
@@ -35,7 +35,7 @@ public class AlgorithmDay13 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         String[] twoPartInput = input.split("\n\n");
 
         TransparentPaper transparentPaper = new TransparentPaper(readDots(twoPartInput[0]));

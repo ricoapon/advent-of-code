@@ -44,7 +44,7 @@ public class AlgorithmDay2 implements Algorithm {
     }
 
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         int score = 0;
         for (String line : input.split("\r?\n")) {
             Shape oppponent = Shape.value(String.valueOf(line.toCharArray()[0]));
@@ -62,7 +62,7 @@ public class AlgorithmDay2 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         int score = 0;
         for (String line : input.split("\r?\n")) {
             Shape oppponent = Shape.value(String.valueOf(line.toCharArray()[0]));

@@ -45,8 +45,8 @@ public class AlgorithmDayTestRunnerUtil {
             return;
         }
 
-        Function<String, String> partToInvoke = testData.part() == 1 ? algorithm.get()::part1 : algorithm.get()::part2;
-        assertEquals(testData.expectedOutput(), partToInvoke.apply(testData.input()));
+        Function<String, Object> partToInvoke = testData.part() == 1 ? algorithm.get()::part1 : algorithm.get()::part2;
+        assertEquals(testData.expectedOutput(), partToInvoke.apply(testData.input()).toString());
     }
 
     private static Optional<Algorithm> instantiateAlgorithm(int year, int day) {

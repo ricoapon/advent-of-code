@@ -92,7 +92,7 @@ public class AlgorithmDay5 implements Algorithm {
     }
 
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         List<String> crateLines = Arrays.stream(input.split("\r?\n\r?\n")[0].split("\r?\n")).toList();
         CrateStacks crateStacks = CrateStacks.of(crateLines);
 
@@ -107,7 +107,7 @@ public class AlgorithmDay5 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         List<String> crateLines = Arrays.stream(input.split("\r?\n\r?\n")[0].split("\r?\n")).toList();
         CrateStacks crateStacks = CrateStacks.of(crateLines);
 

@@ -9,7 +9,7 @@ import nl.ricoapon.framework.Algorithm;
 
 public class AlgorithmDay13 implements Algorithm {
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         List<Pattern> patterns = Pattern.of(input);
         int total = 0;
         for (Pattern p : patterns) {
@@ -26,7 +26,7 @@ public class AlgorithmDay13 implements Algorithm {
             total += columnScore;
         }
 
-        return String.valueOf(total);
+        return total;
     }
 
     private int determineReflectionScore(List<Pattern.Row> rows) {
@@ -75,7 +75,7 @@ public class AlgorithmDay13 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         List<Pattern> patterns = Pattern.of(input);
         int total = 0;
         for (Pattern p : patterns) {
@@ -92,7 +92,7 @@ public class AlgorithmDay13 implements Algorithm {
             total += columnScore;
         }
 
-        return String.valueOf(total);
+        return total;
     }
 
     private int determineReflectionScorePart2(List<Pattern.Row> rows) {

@@ -1,16 +1,11 @@
 package nl.ricoapon.year2023.day6;
 
-import java.util.List;
-
 import nl.ricoapon.framework.Algorithm;
 
 public class AlgorithmDay6 implements Algorithm {
     @Override
-    public String part1(String input) {
-        List<Race> races = Race.of(input);
-        long result = races.stream().map(this::countNrOfWaysToWin).reduce(1L, (l1, l2) -> l1 * l2);
-
-        return String.valueOf(result);
+    public Object part1(String input) {
+        return Race.of(input).stream().map(this::countNrOfWaysToWin).reduce(1L, (l1, l2) -> l1 * l2);
     }
 
     private long countNrOfWaysToWin(Race race) {
@@ -26,9 +21,7 @@ public class AlgorithmDay6 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
-        Race race = Race.of(input.replace(" ", "")).get(0);
-        long result = countNrOfWaysToWin(race);
-        return String.valueOf(result);
+    public Object part2(String input) {
+        return countNrOfWaysToWin(Race.of(input.replace(" ", "")).get(0));
     }
 }

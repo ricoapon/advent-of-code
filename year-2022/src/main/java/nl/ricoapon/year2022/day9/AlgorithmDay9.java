@@ -23,13 +23,13 @@ public class AlgorithmDay9 implements Algorithm {
     }
 
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         HeadTailPlain headTailPlain = processInput(input, 2);
         return "" + headTailPlain.getTailHistory().size();
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         HeadTailPlain headTailPlain = processInput(input, 10);
         return "" + headTailPlain.getTailHistory().size();
     }

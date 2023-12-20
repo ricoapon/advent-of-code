@@ -34,7 +34,7 @@ public class AlgorithmDay11 implements Algorithm {
     int nrOfFlashes = 0;
 
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         Grid<Octopus> grid = createGrid(input);
 
 
@@ -60,7 +60,7 @@ public class AlgorithmDay11 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         Grid<Octopus> grid = createGrid(input);
 
         int step = 0;

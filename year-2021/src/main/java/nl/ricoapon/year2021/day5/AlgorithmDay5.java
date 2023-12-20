@@ -10,7 +10,7 @@ import nl.ricoapon.framework.Algorithm;
 public class AlgorithmDay5 implements Algorithm {
 
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         List<Line> lines = Arrays.stream(input.split("\n")).map(Line::of).filter(Line::isHorizontalOrVertical).toList();
 
         Map<Point, Integer> pointOccurrenceMap = new HashMap<>();
@@ -26,7 +26,7 @@ public class AlgorithmDay5 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         List<Line> lines = Arrays.stream(input.split("\n")).map(Line::of).toList();
 
         Map<Point, Integer> pointOccurrenceMap = new HashMap<>();

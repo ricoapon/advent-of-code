@@ -35,7 +35,7 @@ public class AlgorithmDay4 implements Algorithm {
     }
 
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         long result = Arrays.stream(input.split("\r?\n")).filter(this::fullyContainsOther).count();
         return String.valueOf(result);
     }
@@ -51,7 +51,7 @@ public class AlgorithmDay4 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         long result = Arrays.stream(input.split("\r?\n")).filter(this::overlapAnything).count();
         return String.valueOf(result);
     }

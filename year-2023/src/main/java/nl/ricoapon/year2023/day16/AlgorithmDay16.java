@@ -1,5 +1,10 @@
 package nl.ricoapon.year2023.day16;
 
+import nl.ricoapon.Coordinate2D;
+import nl.ricoapon.GridWithCoordinates;
+import nl.ricoapon.Pair;
+import nl.ricoapon.framework.Algorithm;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -7,11 +12,6 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 import java.util.function.Function;
-
-import nl.ricoapon.Coordinate2D;
-import nl.ricoapon.GridWithCoordinates;
-import nl.ricoapon.Pair;
-import nl.ricoapon.framework.Algorithm;
 
 public class AlgorithmDay16 implements Algorithm {
     public enum Direction {
@@ -22,7 +22,7 @@ public class AlgorithmDay16 implements Algorithm {
 
         private final Function<Coordinate2D, Coordinate2D> nextStep;
 
-        private Direction(Function<Coordinate2D, Coordinate2D> nextStep) {
+        Direction(Function<Coordinate2D, Coordinate2D> nextStep) {
             this.nextStep = nextStep;
         }
 
@@ -40,7 +40,7 @@ public class AlgorithmDay16 implements Algorithm {
 
         private final String symbol;
 
-        private Cell(String symbol) {
+        Cell(String symbol) {
             this.symbol = symbol;
         }
 
@@ -55,7 +55,7 @@ public class AlgorithmDay16 implements Algorithm {
         }
     }
 
-    public class CellContent {
+    public static class CellContent {
         Set<Direction> lightBeams = new HashSet<>();
         final Cell cell;
 
@@ -65,20 +65,18 @@ public class AlgorithmDay16 implements Algorithm {
     }
 
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         GridWithCoordinates<CellContent> grid = GridWithCoordinates.ofString(input, CellContent::new);
 
         // The direction indicates where we are going (so not from which part of the
         // cell we enter).
-        // We start at the top corner and we go from left to right. So we fill in right
+        // We start at the top corner, and we go from left to right. So we fill in right
         // as the direction.
-        long energized = countEnergized(new Coordinate2D(0, 0), Direction.RIGHT, grid);
-
-        return String.valueOf(energized);
+        return countEnergized(new Coordinate2D(0, 0), Direction.RIGHT, grid);
     }
 
     private long countEnergized(Coordinate2D startingCoordinate, Direction startingDirection,
-            GridWithCoordinates<CellContent> grid) {
+                                GridWithCoordinates<CellContent> grid) {
 
         // Other algorithms can mess up the light beams set. So we need to clear it
         // before processing.
@@ -153,7 +151,7 @@ public class AlgorithmDay16 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         GridWithCoordinates<CellContent> grid = GridWithCoordinates.ofString(input, CellContent::new);
 
         List<Pair<Coordinate2D, Direction>> startingValues = new ArrayList<>();
@@ -170,9 +168,7 @@ public class AlgorithmDay16 implements Algorithm {
             startingValues.add(new Pair<>(new Coordinate2D(i, grid.getSizeY() - 1), Direction.LEFT));
         }
 
-        long maxEnergized = startingValues.stream().mapToLong(s -> countEnergized(s.getL(), s.getR(), grid)).max()
+        return startingValues.stream().mapToLong(s -> countEnergized(s.getL(), s.getR(), grid)).max()
                 .orElseThrow();
-
-        return String.valueOf(maxEnergized);
     }
 }

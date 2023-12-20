@@ -7,7 +7,7 @@ import nl.ricoapon.framework.Algorithm;
 public class AlgorithmDay2 implements Algorithm {
 
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         Position position = new Position();
         Arrays.stream(input.split("\n"))
                 .map(Command::of)
@@ -16,7 +16,7 @@ public class AlgorithmDay2 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         PositionPart2 position = new PositionPart2();
         Arrays.stream(input.split("\n"))
                 .map(Command::of)

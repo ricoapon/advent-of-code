@@ -53,7 +53,7 @@ public class AlgorithmDay15 implements Algorithm {
     }
 
     @Override
-    public String part1(String input) {
+    public Object part1(String input) {
         boolean isExample = input.startsWith("Sensor at x=2,");
         int y;
         if (isExample) {
@@ -78,7 +78,7 @@ public class AlgorithmDay15 implements Algorithm {
     }
 
     @Override
-    public String part2(String input) {
+    public Object part2(String input) {
         return "x";
     }
 }
