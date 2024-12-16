@@ -127,6 +127,10 @@ public class GridWithCoordinates<C> {
         return adjacentCoordinates;
     }
 
+    public boolean containsCoordindate2D(Coordinate2D c) {
+        return (0 <= c.x() && c.x() < sizeX) && (0 <= c.y() && c.y() < sizeY);
+    }
+
     public int getSizeX() {
         return sizeX;
     }
