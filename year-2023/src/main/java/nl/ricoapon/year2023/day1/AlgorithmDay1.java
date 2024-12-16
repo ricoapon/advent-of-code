@@ -2,7 +2,6 @@ package nl.ricoapon.year2023.day1;
 
 import nl.ricoapon.framework.Algorithm;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Comparator;
