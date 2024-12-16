@@ -49,4 +49,12 @@ public record Coordinate2D(int x, int y) {
         adjacent.addAll(getDiagonalAdjacent(maxX, maxY));
         return adjacent;
     }
+
+    public Coordinate2D sum(Coordinate2D other) {
+        return new Coordinate2D(x + other.x, y + other.y);
+    }
+
+    public Coordinate2D multiply(int i) {
+        return new Coordinate2D(x * i, y * i);
+    }
 }
