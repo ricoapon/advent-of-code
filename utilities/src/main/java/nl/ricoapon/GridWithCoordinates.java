@@ -52,6 +52,16 @@ public class GridWithCoordinates<C> {
     }
 
     /**
+     * @return The cell at the given coordinate. If it doesn't exist, it returns {@code null}.
+     */
+    public C getCellOrNull(Coordinate2D coordinate) {
+        if (!this.containsCoordindate2D(coordinate)) {
+            return null;
+        }
+        return grid.get(coordinate.x()).get(coordinate.y()).r();
+    }
+
+    /**
      * @return {@link Stream} of all elements in the grid.
      */
     public Stream<Pair<Coordinate2D, C>> stream() {
