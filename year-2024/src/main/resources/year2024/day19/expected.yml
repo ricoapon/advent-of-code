@@ -1,0 +1,6 @@
+part1:
+  input: 242
+  example: 6
+part2:
+  input: 595975512785325
+  example: 16
