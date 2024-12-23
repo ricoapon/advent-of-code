@@ -1,0 +1,6 @@
+part1:
+  input: 1064
+  example: 7
+part2:
+  input: aq,cc,ea,gc,jo,od,pa,rg,rv,ub,ul,vr,yy
+  example: co,de,ka,ta
