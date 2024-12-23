@@ -40,6 +40,7 @@ public record Platform(GridWithCoordinates<Cell> grid) {
         EAST(c -> new Coordinate2D(c.x(), c.y() - 1), (gridSizeX, c) -> new Coordinate2D(c.y() - 1, c.x()));
 
         private final Function<Coordinate2D, Coordinate2D> move;
+        @SuppressWarnings("unused")
         private final BiFunction<Integer, Coordinate2D, Coordinate2D> walkThroughGrid;
 
         private Direction(Function<Coordinate2D, Coordinate2D> move, BiFunction<Integer, Coordinate2D, Coordinate2D> walkThroughGrid) {
