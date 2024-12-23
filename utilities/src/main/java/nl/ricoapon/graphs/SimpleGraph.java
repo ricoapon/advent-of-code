@@ -8,16 +8,20 @@ import java.util.Set;
 /**
  * Graph implementation where the graph satisfies the following constraints:
  * <ul>
- *     <li>Unweighted</li>
- *     <li>Undirected</li>
- *     <li>No loops or multiple edges</li>
+ * <li>Unweighted</li>
+ * <li>Undirected</li>
+ * <li>No self-loops or multiple edges</li>
  * </ul>
+ * 
  * @param <N> The type of nodes.
  */
 public class SimpleGraph<N> {
     private final Map<N, Set<N>> edges = new HashMap<>();
 
-    public void addNode(N node){
+    public void addNode(N node) {
+        if (edges.containsKey(node)) {
+            return;
+        }
         edges.put(node, new HashSet<>());
     }
 
@@ -25,7 +29,7 @@ public class SimpleGraph<N> {
         if (!containsNode(source) || !containsNode(target)) {
             return;
         }
-        
+
         edges.get(source).add(target);
         edges.get(target).add(source);
     }
