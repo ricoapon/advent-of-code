@@ -31,8 +31,6 @@ public class AlgorithmDay9 implements Algorithm {
         public boolean hasNext() {
             // We can still continue if the first set of indices is not past the second set
             // of indices.
-            System.out.println(indexFirst + " " + indexSecond + " " + reverseIndexFirst + " " + reverseIndexSecond);
-
             if (indexFirst > reverseIndexFirst) {
                 return false;
             } else if (indexFirst < reverseIndexFirst) {
@@ -102,7 +100,6 @@ public class AlgorithmDay9 implements Algorithm {
         while (iterator.hasNext()) {
             var next = iterator.next();
             checksum += i * next;
-            System.out.println("Checksum " + i + " * " + next + " = " + (i * next));
             i++;
         }
 

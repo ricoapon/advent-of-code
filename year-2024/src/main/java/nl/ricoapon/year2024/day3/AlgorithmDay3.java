@@ -32,8 +32,6 @@ public class AlgorithmDay3 implements Algorithm {
             var first = input.substring(0, index);
             var last = input.substring(input.indexOf("do()", index) + "do()".length());
 
-            System.out.println(index);
-
             input = first + last;
         }
 

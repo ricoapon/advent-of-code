@@ -106,7 +106,6 @@ public class AlgorithmDay6 implements Algorithm {
                 .filter(c -> g.getCell(c) == Content.EMPTY)
                 .filter(
                         newlyFilledC -> {
-                            System.out.println(newlyFilledC);
                             return runsInALoop(g, c -> (c.x() == newlyFilledC.x() && c.y() == newlyFilledC.y()) || g.getCellOrNull(c) == Content.FILLED);
                         })
                 .count();

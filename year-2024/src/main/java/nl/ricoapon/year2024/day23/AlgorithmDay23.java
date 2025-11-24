@@ -48,7 +48,6 @@ public class AlgorithmDay23 implements Algorithm {
                 .map(e -> new ConnectedComponent(g, List.of(e.a, e.b))).collect(Collectors.toSet());
         return extendByOne(g, connectedComponentsSize2).stream()
                 .filter(ConnectedComponent::containsNodeStartingWithT)
-                .peek(System.out::println)
                 .count();
     }
 
