@@ -1,4 +1,6 @@
 {
     "java.jdt.ls.java.home": "/usr/lib/jvm/msopenjdk-current",
     "debug.console.collapseIdenticalLines": false,
+    "java.compile.nullAnalysis.mode": "disabled",
+    "java.configuration.updateBuildConfiguration": "interactive",
 }
