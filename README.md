@@ -5,7 +5,7 @@ contains additional tools to make creating solutions easier.
 
 ## CLI
 
-To automatically download input, you need to set your session:
+To automatically download input, you need to set your session. You can find your session by opening the site, login, open developer tools window (F12), go to "Application", go to "Cookies" and find the cookie "session". This is the value to be used in the command.
 
 ```
 ./advent set-session <session-from-cookie>
