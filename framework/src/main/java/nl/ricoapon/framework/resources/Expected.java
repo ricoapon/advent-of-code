@@ -1,5 +1,6 @@
 package nl.ricoapon.framework.resources;
 
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
@@ -10,7 +11,7 @@ public class Expected {
     public Map<String, String> part2;
 
     public static Expected of(String yamlAsString) {
-        Yaml yaml = new Yaml(new Constructor(Expected.class));
+        Yaml yaml = new Yaml(new Constructor(Expected.class, new LoaderOptions()));
         Expected expected = yaml.load(yamlAsString);
 
         if (expected.part1 == null || expected.part2 == null) {
