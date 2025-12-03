@@ -22,7 +22,7 @@ public class AlgorithmDay2 implements Algorithm {
         }
 
         public Stream<Long> findInvalidIds() {
-            return LongStream.range(min, max + 1).filter(this::isInvalid).peek(i -> System.out.println(i)).boxed();
+            return LongStream.range(min, max + 1).filter(this::isInvalid).boxed();
         }
 
         private boolean isInvalid(long l) {
@@ -38,7 +38,7 @@ public class AlgorithmDay2 implements Algorithm {
         }
 
         public Stream<Long> findInvalidIdsPart2() {
-            return LongStream.range(min, max + 1).filter(this::isInvalidPart2).peek(i -> System.out.println(i)).boxed();
+            return LongStream.range(min, max + 1).filter(this::isInvalidPart2).boxed();
         }
 
         private boolean isInvalidPart2(long l) {
