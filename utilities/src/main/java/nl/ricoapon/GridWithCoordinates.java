@@ -44,6 +44,19 @@ public class GridWithCoordinates<C> {
         }
     }
 
+    // Create a new grid where cells are modified using the method.
+    public GridWithCoordinates<C> creatNewGrid(Function<Coordinate2D, C> transform) {
+        List<List<C>> newGrid = new ArrayList<>();
+        for (int x = 0; x < sizeX; x++) {
+            List<C> row = new ArrayList<>();
+            newGrid.add(row);
+            for (int y = 0; y < sizeY; y++) {
+                row.add(transform.apply(new Coordinate2D(x, y)));
+            }
+        }
+        return new GridWithCoordinates<>(newGrid);
+    }
+
     /**
      * @return The cell at the given coordinate.
      */
