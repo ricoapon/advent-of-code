@@ -1,0 +1,7 @@
+part1:
+  input: 520
+  example: 3
+part2:
+  input: 347338785050515
+  example: 14
+  example2: 7
