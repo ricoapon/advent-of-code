@@ -1,9 +1,11 @@
 package nl.ricoapon;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 /**
@@ -15,6 +17,14 @@ public class Grid<C> {
     private final List<List<C>> grid;
     private final int sizeX;
     private final int sizeY;
+
+    public static <C> Grid<C> ofString(String input, Function<String, C> convert) {
+        List<List<C>> grid = Arrays.stream(input.split("\n"))
+                .map(s -> Arrays.asList(s.split("")))
+                .map(l -> l.stream().map(convert).toList())
+                .toList();
+        return new Grid<>(grid);
+    }
 
     public Grid(List<List<C>> grid) {
         this.grid = grid;
