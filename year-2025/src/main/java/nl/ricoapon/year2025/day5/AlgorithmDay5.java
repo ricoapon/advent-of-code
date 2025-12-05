@@ -108,9 +108,6 @@ public class AlgorithmDay5 implements Algorithm {
                         .flatMap(r -> r.cutOutOtherRange(overlappingRange).stream()).toList();
             }
 
-            System.out.println("----");
-            System.out.println(ranges);
-            System.out.println(newNotOverlappingRanges);
             ranges.addAll(newNotOverlappingRanges);
         }
 

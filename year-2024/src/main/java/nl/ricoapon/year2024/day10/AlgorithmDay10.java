@@ -25,7 +25,6 @@ public class AlgorithmDay10 implements Algorithm {
         Grid<Cell> grid = Grid.ofString(input, (s) -> new Cell(Integer.valueOf(s)));
         return grid.stream().filter(c -> c.height == 0)
                 .mapToInt(c -> determineNrOfHikingTrails(c, grid, true))
-                .peek(System.out::println)
                 .sum();
     }
 
@@ -68,7 +67,6 @@ public class AlgorithmDay10 implements Algorithm {
         Grid<Cell> grid = Grid.ofString(input, (s) -> new Cell(Integer.valueOf(s)));
         return grid.stream().filter(c -> c.height == 0)
                 .mapToInt(c -> determineNrOfHikingTrails(c, grid, false))
-                .peek(System.out::println)
                 .sum();
     }
 }
