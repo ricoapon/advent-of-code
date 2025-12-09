@@ -158,7 +158,6 @@ public class AlgorithmDay8 implements Algorithm {
         // Looping over the SortedSet will automatically loop from shortest distance to
         // highest!
         for (Connection connection : shortestConnections) {
-            System.out.println(connection);
             var iterator = connection.coordinates.iterator();
             var a = iterator.next();
             var b = iterator.next();
