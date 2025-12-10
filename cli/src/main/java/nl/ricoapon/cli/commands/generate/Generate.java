@@ -21,11 +21,9 @@ import static nl.ricoapon.cli.MyFileUtils.touchFile;
         description = "Generates all the needed files needed to solve a problem.")
 public class Generate implements Runnable {
 
-    @SuppressWarnings("unused")
     @CommandLine.Parameters(index = "0", description = "The day of the problem to solve", defaultValue = CommandLine.Parameters.NULL_VALUE)
     private Integer day;
 
-    @SuppressWarnings("unused")
     @CommandLine.Parameters(index = "1", description = "The year of the problem to solve", defaultValue = CommandLine.Parameters.NULL_VALUE)
     private Integer year;
 
