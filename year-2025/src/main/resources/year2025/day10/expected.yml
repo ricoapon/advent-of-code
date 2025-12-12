@@ -2,5 +2,6 @@ part1:
   input: 457
   example: 7
 part2:
-  input: x
+  input: 17576
   example: 33
+  example2: 133

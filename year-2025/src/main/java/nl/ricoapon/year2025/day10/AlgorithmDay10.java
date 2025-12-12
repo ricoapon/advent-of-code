@@ -13,6 +13,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.ojalgo.optimisation.Expression;
+import org.ojalgo.optimisation.ExpressionsBasedModel;
+import org.ojalgo.optimisation.Optimisation;
+import org.ojalgo.optimisation.Variable;
+
 import nl.ricoapon.framework.Algorithm;
 
 public class AlgorithmDay10 implements Algorithm {
@@ -133,17 +138,134 @@ public class AlgorithmDay10 implements Algorithm {
         // We can convert each problem into a solvable Ax=y where A and y are given.
         // Consider: (3) (1,3) (2) (2,3) (0,2) (0,1) {3,5,4,7}. This is:
         //
-        // +-------------------+   +----+   +---+
-        // | 0  0  0  0  1  1  |   | x1 |   | 3 |
-        // | 0  1  0  0  0  1  |   | x2 |   | 5 |
-        // | 0  0  1  1  1  0  | * | x3 | = | 4 |
-        // | 1  1  0  1  0  0  |   | x4 |   | 7 |
-        // +-------------------+   | x5 |   +---+
-        //                         | x6 |
-        //                         +----+
+        // +-------------+ . +----+ . +---+
+        // | 0 0 0 0 1 1 | . | x0 | . | 3 |
+        // | 0 1 0 0 0 1 | . | x1 | . | 5 |
+        // | 0 0 1 1 1 0 | * | x2 | = | 4 |
+        // | 1 1 0 1 0 0 | . | x3 | . | 7 |
+        // +-------------+ . | x4 | . +---+
+        // ................. | x5 |
+        // ..................+----+
         //
-        // Now we can just solve this with Gaussian elimination.
-        // We just need to make sure that the end result is only positive integers.
-        return "x";
+        // This is just a set of linear equations that we can solve.
+        // I use a library, because that is a good experience.
+
+        long total = 0;
+        for (String line : input.split("\\r?\\n")) {
+            double[] yValues = State.ofPart2(line).indicators.stream().mapToDouble(i -> (double) i).toArray();
+            List<List<Integer>> toggles = togglesOf(line);
+            double[][] A = convertToMatrix(toggles, yValues.length);
+            int nVars = A[0].length;
+
+            // Build the model
+            ExpressionsBasedModel model = new ExpressionsBasedModel();
+
+            // Add variables to the model/
+            Variable[] vars = new Variable[nVars];
+            for (int j = 0; j < nVars; j++) {
+                vars[j] = model.addVariable("x" + j)
+                        .integer(true) // mark as integer
+                        .lower(0); // x_j ≥ 0 (non-negative integers)
+            }
+
+            // Add constraints A[i]·x == y[i]
+            for (int i = 0; i < A.length; i++) {
+                Expression expr = model.addExpression("eq" + i).level(yValues[i]);
+                for (int j = 0; j < nVars; j++) {
+                    expr.set(vars[j], A[i][j]);
+                }
+            }
+
+            printReadableExpressions(model);
+
+            // Add an objective to minimize the sum of all the variables.
+            Expression objective = model.addExpression("MinimizeSum");
+            for (Variable v : vars) {
+                objective.set(v, 1);
+            }
+            objective.weight(1);
+
+            // Solve the model
+            Optimisation.Result result = model.minimise();
+
+            if (result.getState().isFeasible()) {
+                // I had some issues with rounding. Apparently, the output could get "27.9999999" for example.
+                // If you get the value, it will return 27. So we need to return the double and then round to
+                // the nearest integer. I found this by verifying the solutions.
+                if (!verifySolution(toggles, result, State.ofPart2(line))) {
+                    throw new RuntimeException();
+                }
+
+                for (int j = 0; j < nVars; j++) {
+                    total += Math.round(result.get(j).doubleValue());
+                }
+            } else {
+                // The input is constructed by AoC to always have a solution.
+                throw new RuntimeException("Could not find solution!");
+            }
+        }
+
+        return total;
+    }
+
+    // Compose matrix A from the Ax=y equation.
+    private double[][] convertToMatrix(List<List<Integer>> toggles, int sizeY) {
+        double[][] coefficients = new double[sizeY][toggles.size()];
+
+        // Each List<Integer> converts into a vertical entry in the matrix.
+        for (int i = 0; i < toggles.size(); i++) {
+            var toggle = toggles.get(i);
+            for (int j = 0; j < sizeY; j++) {
+                var value = toggle.contains(j) ? 1 : 0;
+                coefficients[j][i] = value;
+            }
+        }
+
+        return coefficients;
+    }
+
+    public void printReadableExpressions(ExpressionsBasedModel model) {
+        List<Variable> vars = model.getVariables();
+
+        for (Expression expr : model.getExpressions()) {
+            StringBuilder sb = new StringBuilder();
+
+            boolean first = true;
+            for (Variable v : vars) {
+                double coef = expr.get(v).doubleValue();
+                if (Math.abs(coef) > 1e-12) {
+                    if (!first)
+                        sb.append(" + ");
+                    sb.append(coef).append("*").append(v.getName());
+                    first = false;
+                }
+            }
+
+            if (expr.isEqualityConstraint()) {
+                sb.append(" = ").append(expr.getLowerLimit());
+            } else {
+                if (expr.getLowerLimit() != null)
+                    sb.append(" >= ").append(expr.getLowerLimit());
+                if (expr.getUpperLimit() != null)
+                    sb.append(" <= ").append(expr.getUpperLimit());
+            }
+
+            System.out.println(sb);
+        }
+    }
+
+    private boolean verifySolution(List<List<Integer>> toggles, Optimisation.Result result, State targetState) {
+        State state = new State(Collections.nCopies(targetState.indicators.size(), 0));
+        for (int i = 0; i < toggles.size(); i++) {
+            var toggle = toggles.get(i);
+            
+            // Apply the toggle X times, where X is the value of the result.
+            for (int x = 0; x < Math.round(result.get(i).doubleValue()); x++) {
+                state = state.applyPart2(toggle);
+            }
+        }
+
+        System.out.println(state);
+        return state.equals(targetState);
     }
 }
