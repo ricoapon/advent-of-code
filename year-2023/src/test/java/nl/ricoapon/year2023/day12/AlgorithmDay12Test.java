@@ -23,7 +23,6 @@ class AlgorithmDay12Test {
 
     @Test
     void part2() {
-        // 961359330 is too low
         algorithmDayTestRunnerUtil.testInput(2);
     }
 }

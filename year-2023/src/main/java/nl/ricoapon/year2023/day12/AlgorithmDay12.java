@@ -14,21 +14,21 @@ public class AlgorithmDay12 implements Algorithm {
             boolean previousCharWasDamagedSpring) {
     }
 
-    private final Map<State, Integer> memoization = new HashMap<>();
+    private final Map<State, Long> memoization = new HashMap<>();
 
-    private int recursivelyFindAllSolutionsWithMemoization(String arrangement, List<Integer> validation,
+    private long recursivelyFindAllSolutionsWithMemoization(String arrangement, List<Integer> validation,
             boolean previousCharWasDamagedSpring) {
         State state = new State(arrangement, validation, previousCharWasDamagedSpring);
         if (memoization.containsKey(state)) {
             return memoization.get(state);
         }
 
-        var result = recursivelyFindAllSolutions(arrangement, validation, previousCharWasDamagedSpring);
+        long result = recursivelyFindAllSolutions(arrangement, validation, previousCharWasDamagedSpring);
         memoization.put(state, result);
         return result;
     }
 
-    private int recursivelyFindAllSolutions(String arrangement, List<Integer> validation,
+    private long recursivelyFindAllSolutions(String arrangement, List<Integer> validation,
             boolean previousCharWasDamagedSpring) {
 
         if (arrangement.length() == 0) {
@@ -76,13 +76,13 @@ public class AlgorithmDay12 implements Algorithm {
                         previousCharWasDamagedSpring);
     }
 
-    private int findNrOfSolutions(String line) {
+    private long findNrOfSolutions(String line) {
         String arrangementWithWildcards = line.split(" ")[0];
         List<Integer> validation = Stream.of(line.split(" ")[1].split(",")).map(Integer::valueOf).toList();
         return recursivelyFindAllSolutionsWithMemoization(arrangementWithWildcards, validation, false);
     }
 
-    private int findNrOfSolutionsPart2(String line) {
+    private long findNrOfSolutionsPart2(String line) {
         String arrangementWithWildcards = line.split(" ")[0] + "?"
                 + line.split(" ")[0] + "?"
                 + line.split(" ")[0] + "?"
@@ -97,16 +97,14 @@ public class AlgorithmDay12 implements Algorithm {
     @Override
     public Object part1(String input) {
         return Stream.of(input.split("\\r?\\n"))
-                .mapToInt(this::findNrOfSolutions)
+                .mapToLong(this::findNrOfSolutions)
                 .sum();
     }
 
     @Override
     public Object part2(String input) {
-        // There is some bug still, I will have to figure out what the bug is!
-        // return Stream.of(input.split("\\r?\\n"))
-        //         .mapToInt(this::findNrOfSolutionsPart2)
-        //         .sum();
-        return "x";
+        return Stream.of(input.split("\\r?\\n"))
+                .mapToLong(this::findNrOfSolutionsPart2)
+                .sum();
     }
 }
