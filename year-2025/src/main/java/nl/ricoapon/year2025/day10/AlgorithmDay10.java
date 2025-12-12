@@ -176,7 +176,7 @@ public class AlgorithmDay10 implements Algorithm {
                 }
             }
 
-            printReadableExpressions(model);
+            // printReadableExpressions(model);
 
             // Add an objective to minimize the sum of all the variables.
             Expression objective = model.addExpression("MinimizeSum");
@@ -265,7 +265,6 @@ public class AlgorithmDay10 implements Algorithm {
             }
         }
 
-        System.out.println(state);
         return state.equals(targetState);
     }
 }
