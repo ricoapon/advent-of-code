@@ -1,7 +1,9 @@
 package nl.ricoapon.year2025.day9;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import nl.ricoapon.Coordinate2D;
@@ -13,7 +15,7 @@ public class AlgorithmDay9 implements Algorithm {
         return new Coordinate2D(integers.get(0), integers.get(1));
     }
 
-    public long squareSize(Coordinate2D a, Coordinate2D b) {
+    public long rectangleSize(Coordinate2D a, Coordinate2D b) {
         return (Math.abs(a.x() - b.x()) + 1L) * (Math.abs(a.y() - b.y()) + 1L);
     }
 
@@ -23,9 +25,9 @@ public class AlgorithmDay9 implements Algorithm {
         long biggestSize = 0;
         for (Coordinate2D a : coordinates) {
             for (Coordinate2D b : coordinates) {
-                var newSquareSize = squareSize(a, b);
-                if (newSquareSize > biggestSize) {
-                    biggestSize = newSquareSize;
+                var newRectangleSize = rectangleSize(a, b);
+                if (newRectangleSize > biggestSize) {
+                    biggestSize = newRectangleSize;
                 }
             }
         }
@@ -38,7 +40,7 @@ public class AlgorithmDay9 implements Algorithm {
         VERTICAL;
     }
 
-    protected record Line(Coordinate2D a, Coordinate2D b, Axis axis) {
+    public record Line(Coordinate2D a, Coordinate2D b, Axis axis) {
         public Line(Coordinate2D a, Coordinate2D b) {
             this(smallest(a, b), largest(a, b), determineAxis(a, b));
         }
@@ -61,36 +63,63 @@ public class AlgorithmDay9 implements Algorithm {
             return Axis.HORIZONTAL;
         }
 
-        // We exclude the start and end points, because obviously they are on a line.
-        public boolean hasSinglePointInsideLineIntersectionWith(Line other) {
-            // We can only have a single point if have a vertical and horizontal line.
-            if (axis == other.axis) {
-                return false;
-            }
-
-            // If a point exists, it must be this one. If it is also on both lines, we
-            // found that single point.
-            var x = axis == Axis.VERTICAL ? a.x() : other.a.x();
-            var y = axis == Axis.HORIZONTAL ? a.y() : other.a.y();
-            var c = new Coordinate2D(x, y);
-
-            if (c.equals(a) || c.equals(b) || c.equals(other.a) || c.equals(other.b)) {
-                return false;
-            }
-
-            return contains(c) && other.contains(c);
-        }
-
         public boolean contains(Coordinate2D c) {
             return switch (axis) {
                 case VERTICAL -> c.x() == a.x() && a.y() <= c.y() && c.y() <= b.y();
                 case HORIZONTAL -> c.y() == a.y() && a.x() <= c.x() && c.x() <= b.x();
             };
         }
+
+        // Can be single point or longer range. Both return true.
+        public boolean overlapsWith(Line other) {
+            if (axis == other.axis) {
+                if (sameCoordinate() != other.sameCoordinate()) {
+                    return false;
+                }
+
+                // The lines are co-linear. Oo overlap one of the endpoints must be in the line.
+                return contains(other.a) || contains(other.b);
+            }
+
+            // There can only be one intersection, if it exists.
+            var x = axis == Axis.VERTICAL ? sameCoordinate() : other.sameCoordinate();
+            var y = axis == Axis.HORIZONTAL ? sameCoordinate() : other.sameCoordinate();
+            var c = new Coordinate2D(x, y);
+
+            return contains(c) && other.contains(c);
+        }
+
+        public boolean overlapsWithAny(List<Line> others) {
+            return others.stream().anyMatch(this::overlapsWith);
+        }
+
+        public int minCoordinate() {
+            if (axis == Axis.HORIZONTAL) {
+                return a.x();
+            }
+            return a.y();
+        }
+
+        public int maxCoordinate() {
+            if (axis == Axis.HORIZONTAL) {
+                return b.x();
+            }
+            return b.y();
+        }
+
+        public int sameCoordinate() {
+            if (axis == Axis.HORIZONTAL) {
+                return a.y();
+            }
+            return a.x();
+        }
     }
 
     @Override
     public Object part2(String input) {
+        // Core idea of the algorithm: decrease the size of each rectangle. This means
+        // it must be fully inside, not touching any edges. So we can easily check if
+        // we have an intersection. If so, the rectangle is not fully inside.
         List<Coordinate2D> coordinates = Stream.of(input.split("\\r?\\n")).map(this::of).toList();
         List<Line> lines = new ArrayList<>();
         for (int i = 0; i < coordinates.size(); i++) {
@@ -105,9 +134,14 @@ public class AlgorithmDay9 implements Algorithm {
                 if (a.equals(b) || a.x() == b.x() || a.y() == b.y()) {
                     continue;
                 }
-                var newSquareSize = squareSize(a, b);
-                if (newSquareSize > biggestSize && isSquareInsideBorder(lines, a, b)) {
-                    biggestSize = newSquareSize;
+                var newRectangleSize = rectangleSize(a, b);
+
+                // Move all points inwards.
+                List<Line> rectangleLines = smallerRectangleLines(a, b);
+
+                if (newRectangleSize > biggestSize
+                        && rectangleLines.stream().noneMatch(l -> l.overlapsWithAny(lines))) {
+                    biggestSize = newRectangleSize;
                 }
             }
         }
@@ -115,26 +149,37 @@ public class AlgorithmDay9 implements Algorithm {
         return biggestSize;
     }
 
-    private boolean isSquareInsideBorder(List<Line> lines, Coordinate2D a, Coordinate2D b) {
-        // This uses a trick that no two lines inside the list of lines is colinear.
-        // We can reduce the check to if there is a single point intersection.
-        List<Line> squareLines = List.of(
-                new Line(a, new Coordinate2D(a.x(), b.y())),
-                new Line(a, new Coordinate2D(b.x(), a.y())),
-                new Line(new Coordinate2D(a.x(), b.y()), b),
-                new Line(new Coordinate2D(b.x(), a.y()), b));
+    private List<Line> smallerRectangleLines(Coordinate2D a, Coordinate2D b) {
+        // We don't know exactly which coordinate is which. So we find them based on
+        // criteria.
+        var coordinates = List.of(a, new Coordinate2D(a.x(), b.y()), new Coordinate2D(b.x(), a.y()), b);
 
-        for (Line squareLine : squareLines) {
-            if (lines.stream().filter(squareLine::hasSinglePointInsideLineIntersectionWith).count() > 0) {
-                return false;
-            }
-        }
+        // Lowest x, lowest y.
+        var leftBottom = coordinates.stream().min(Comparator.comparing(Coordinate2D::x).thenComparing(Coordinate2D::y))
+                .orElseThrow()
+                .sum(new Coordinate2D(1, 1));
+        // Lowest x, highest y.
+        var leftTop = coordinates.stream()
+                .min(Comparator.comparing(Coordinate2D::x).thenComparing(Coordinate2D::y, Comparator.reverseOrder()))
+                .orElseThrow()
+                .sum(new Coordinate2D(1, -1));
+        // Highest x, highest y.
+        var rightTop = coordinates.stream()
+                .min(Comparator.comparing(Coordinate2D::x, Comparator.reverseOrder()).thenComparing(Coordinate2D::y,
+                        Comparator.reverseOrder()))
+                .orElseThrow()
+                .sum(new Coordinate2D(-1, -1));
+        // Highest x, lowest y.
+        var rightBottom = coordinates.stream()
+                .min(Comparator.comparing(Coordinate2D::x, Comparator.reverseOrder()).thenComparing(Coordinate2D::y))
+                .orElseThrow()
+                .sum(new Coordinate2D(-1, 1));
 
-        // TODO: find out a way to exclude this case:
-        // ..O.
-        // .OX.
-        // Where O are the corners. All four corners must be inside!
-
-        return true;
+        return List.of(
+            new Line(leftBottom, leftTop),
+            new Line(leftBottom, rightBottom),
+            new Line(rightBottom, rightTop),
+            new Line(leftTop, rightTop)
+        );
     }
 }
