@@ -35,7 +35,6 @@ public class AlgorithmDay12 implements Algorithm {
             for (int i = 0; i < nrOfShapesToFit.size(); i++) {
                 shapeArea += shapes.get(i).area * nrOfShapesToFit.get(i);
             }
-            System.out.println(shapeArea);
             if (shapeArea > width * height) {
                 return false;
             }
